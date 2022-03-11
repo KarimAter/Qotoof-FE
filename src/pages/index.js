@@ -8,26 +8,28 @@ export default function Home() {
 
  const [response, setResponse] = useState("");
 
+ //Todo: useEffect on new cases addition
+
   const nameInputRef = useRef(null)
 
   const fetcher = (url) => fetch(url).then((res) => res.json());
-  const { data, error } = useSWR("http://localhost:8000/cases", fetcher);
+  const { data, error } = useSWR("http://localhost:8000/beneficiaryList", fetcher);
 
   let output
 
   if (error) output = "An error has occurred.";
   if (!data) output = "Loading...";
-  if (data) output=(<>{data.map(x => <h6>{x.caseName}</h6> )}</>)
+  if (data) output=(<>{data.map(x => <h4>{x.beneficiaryName}</h4> )}</>)
 
   const submitToBackend = async (e) => {
     e.preventDefault();
-    const caseName = nameInputRef.current.value;
-   await fetch("http://localhost:8000/case", {
+    const beneficiaryName = nameInputRef.current.value;
+   await fetch("http://localhost:8000/beneficiary", {
      method: "POST",
      headers: {
        "Content-Type": "application/json",
      },
-     body: JSON.stringify({caseName}),
+     body: JSON.stringify({beneficiaryName}),
    })
      .then((res) => {
        console.log(res);
@@ -35,7 +37,7 @@ export default function Home() {
        // .json() converts JSON object to JS object
        return res.json();
      })
-     .then((data) => setResponse(`${data.case} is added successfully`))
+     .then((data) => setResponse(`${data.beneficiaryName} is added successfully`))
      .catch((err) => console.log(err));
   };
   return (
@@ -49,12 +51,12 @@ export default function Home() {
       <main>
         <h2>Entering Form</h2>
         <form onSubmit={submitToBackend}>
-          <label htmlFor="case-name">case name</label>
-          <input type={"text"} name={"case-name"} ref={nameInputRef} />
+          <label htmlFor="beneficiary">Beneficiary Name</label>
+          <input type={"text"} name={"beneficiary"} ref={nameInputRef} />
           <button type="submit">Submit to backend</button>
         </form>
         <h4>{response}</h4>
-        <h4>{output}</h4>
+        {output}
       </main>
     </div>
   );
