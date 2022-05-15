@@ -12,14 +12,26 @@ export default function Home() {
 
   const nameInputRef = useRef(null)
 
+ const getList = ()=>{
+
   const fetcher = (url) => fetch(url).then((res) => res.json());
   const { data, error } = useSWR("http://localhost:8000/beneficiaryList", fetcher);
 
-  let output
+  // let output
 
-  if (error) output = "An error has occurred.";
-  if (!data) output = "Loading...";
-  if (data) output=(<>{data.map(x => <h4>{x.beneficiaryName}</h4> )}</>)
+  if (error) return "An error has occurred.";
+  if (!data) return "Loading...";
+  if (data)
+    return (
+      <>
+        {data.map((x) => (
+          <h4>{x.beneficiaryName}</h4>
+        ))}
+      </>
+    );
+ }
+
+ const output = getList();
 
   const submitToBackend = async (e) => {
     e.preventDefault();
@@ -51,8 +63,8 @@ export default function Home() {
       <main>
         <h2>Entering Form</h2>
         <form onSubmit={submitToBackend}>
-          <label htmlFor="beneficiary">Beneficiary Name</label>
-          <input type={"text"} name={"beneficiary"} ref={nameInputRef} />
+          <label for="beneficiary">Beneficiary Name</label>
+          <input type={"text"} id={"beneficiary"} ref={nameInputRef} />
           <button type="submit">Submit to backend</button>
         </form>
         <h4>{response}</h4>
