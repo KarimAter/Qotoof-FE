@@ -1,5 +1,6 @@
 import React from 'react'
 import useSWR from 'swr';
+import Beneficiary from './Beneficiary';
 
 type Props = {}
 interface IBeneficiary {
@@ -19,9 +20,9 @@ const BenList = (props: Props):JSX.Element  => {
   if (!data) return <h4>"Loading..."</h4>;
   if (data)
     return (
-      <div className='bg-neutral-400 h-full p-4'>
-        {data.map((x:IBeneficiary) => (
-          <h4 >{x.name}</h4>
+      <div className="bg-neutral-400 h-full p-4">
+        {data.map((beneficiary: IBeneficiary) => (
+          <Beneficiary name={beneficiary.name} />
         ))}
       </div>
     );
