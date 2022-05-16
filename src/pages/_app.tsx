@@ -5,10 +5,10 @@ import '../../styles/globals.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <div className="flex flex-row h-screen">
       <NavBar />
       <Component {...pageProps} />
-    </>
+    </div>
   );
 }
 

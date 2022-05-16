@@ -50,11 +50,11 @@ const Home = () => {
   //      .catch((err) => console.log(err));
   //   };
   return (
-    <>
+    <div className="flex flex-col w-full p-2">
       <BenForm />
 
       <BenList />
-    </>
+    </div>
   );
 };
 
