@@ -19,9 +19,9 @@ const BenList = (props: Props):JSX.Element  => {
   if (!data) return <h4>"Loading..."</h4>;
   if (data)
     return (
-      <div className='bg-red-900'>
+      <div className='bg-neutral-400'>
         {data.map((x:IBeneficiary) => (
-          <h4 className='bg-red-900'>{x.name}</h4>
+          <h4 >{x.name}</h4>
         ))}
       </div>
     );
