@@ -16,7 +16,7 @@ const nameInputRef = useRef(null);
 const submitToBackend = async (e:React.SyntheticEvent) => {
     e.preventDefault();
     const beneficiaryName = nameInputRef.current.value;
-   await fetch("http://localhost:8000/beneficiary", {
+   await fetch("http://localhost:8000/beneficiary/addBenefciary", {
      method: "POST",
      headers: {
        "Content-Type": "application/json",

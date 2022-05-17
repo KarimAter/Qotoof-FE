@@ -12,7 +12,7 @@ interface IBeneficiary {
 const BenList = (props: Props):JSX.Element  => {
 
   const fetcher = (url:string) => fetch(url).then((res) => res.json());
-  const { data, error } = useSWR("http://localhost:8000/beneficiaryList", fetcher);
+  const { data, error } = useSWR("http://localhost:8000/beneficiary/beneficiaryList", fetcher);
 
   // let output
 
@@ -20,7 +20,7 @@ const BenList = (props: Props):JSX.Element  => {
   if (!data) return <h4>"Loading..."</h4>;
   if (data)
     return (
-      <div className="bg-neutral-400 h-full p-4">
+      <div className=" h-full p-4">
         {data.map((beneficiary: IBeneficiary) => (
           <Beneficiary name={beneficiary.name} />
         ))}
