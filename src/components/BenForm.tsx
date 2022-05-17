@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import React, { useRef, useState } from 'react'
+import Button from './Button';
 
 
 type Props = {}
@@ -45,7 +46,7 @@ const submitToBackend = async (e:React.SyntheticEvent) => {
             <form onSubmit={submitToBackend}>
               <label htmlFor="beneficiary">Beneficiary Name</label>
               <input className='border-black border-2' type={"text"} id={"beneficiary"} ref={nameInputRef} />
-              <button className='bg-red-300 border-2 border-black'  type="submit">Submit to backend</button>
+            <Button text='Add Beneficiary' type='submit' handleClick={submitToBackend}/>
             </form>
             <h4>{response}</h4>
           </main>

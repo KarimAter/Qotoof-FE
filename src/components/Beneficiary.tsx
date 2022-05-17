@@ -24,10 +24,15 @@ const Beneficiary = ({ name }) => {
         .catch((err) => console.log(err));
     };
   return (
-    <div className="h-20 border-pink-400 bg-slate-200 border-solid m-4 border-2 flex justify-between">
-      <h2 className=" px-2 font-semibold text-blue-500 my-auto">{name}</h2>
+    <div
+      className="flex justify-between min-h-fit h-16 rounded-md bg-gray-100  m-4 border-2 
+    shadow-md"
+    >
+      <h2 className=" px-2 font-semibold text-textPrimary-700 my-auto">
+        {name}
+      </h2>
       <div className="flex my-auto">
-        <Button text={"Edit"} handleClick={() => console.log("edit")}></Button>
+        <Button text={"Edit"} handleClick={() => deleteBeneficiary}></Button>
         <Button text={"Delete"} handleClick={() => deleteBeneficiary}></Button>
       </div>
     </div>
