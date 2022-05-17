@@ -3,26 +3,45 @@ import Button from './Button';
 
 type Props = {name:string}
 
-const Beneficiary = ({ name }) => {
+const Beneficiary = (props:Props) => {
+    const { name } = props;
+    
 
-    const deleteBeneficiary = async (name: string) => {
-      await fetch("http://localhost:8000/beneficiary/addBenefciary", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        // body: JSON.stringify({ beneficiaryName }),
-      })
-        .then((res) => {
-          console.log(res);
-          return res.json();
-        })
-        .then((data) =>
-          //,,,
-          console.log("success")
+    const editBeneficiary = async () => {
+        await fetch(
+          `http://localhost:8000/beneficiary/editBeneficiary/${name}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name: 'Karim' }),
+          }
         )
+          .then((res) => res.json())
+          .then((data) => console.log(data))
+          .catch((err) => console.log(err));
+      };
+
+
+
+    const deleteBeneficiary = async () => {
+      await fetch(
+        `http://localhost:8000/beneficiary/deleteBeneficiary/${name}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => console.log(data))
         .catch((err) => console.log(err));
     };
+    
+
+
   return (
     <div
       className="flex justify-between min-h-fit h-16 rounded-md bg-gray-100  m-4 border-2 
@@ -32,8 +51,8 @@ const Beneficiary = ({ name }) => {
         {name}
       </h2>
       <div className="flex my-auto">
-        <Button text={"Edit"} handleClick={() => deleteBeneficiary}></Button>
-        <Button text={"Delete"} handleClick={() => deleteBeneficiary}></Button>
+        <Button text={"Edit"} handleClick={editBeneficiary}></Button>
+        <Button text={"Delete"} handleClick={deleteBeneficiary}></Button>
       </div>
     </div>
   );
