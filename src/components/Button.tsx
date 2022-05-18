@@ -8,19 +8,13 @@ interface IBeneficiaryProps {
 
 function Button(props: IBeneficiaryProps) {
   const { text, handleClick, type } = props;
-  const [count, setcoun] = useState('second');
-
-  useEffect(() => {
-    console.log(count);
-  }, [count]);
-
   return (
     <button
       type={type || 'button'}
-              onClick={handleClick}
-        className="text-white bg-gradient-to-r from-primary to-secondary hover:bg-gradient-to-bl
-    focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-sm rounded-lg text-xs px-2 py-2
-    text-center mr-2 w-fit h-8"
+      onClick={handleClick}
+      className="font-sm  mr-2
+        h-8 w-fit rounded-lg bg-gradient-to-r from-primary to-secondary px-2 py-2 text-center
+        text-xs text-white hover:bg-gradient-to-bl focus:outline-none focus:ring-4  focus:ring-cyan-300 dark:focus:ring-cyan-800"
     >
       {text}
     </button>

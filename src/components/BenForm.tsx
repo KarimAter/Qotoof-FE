@@ -42,7 +42,7 @@ function BenForm(props: Props) {
         <form onSubmit={submitToBackend}>
           <label htmlFor="beneficiary">Beneficiary Name</label>
           <input
-            className="border-black border-2"
+            className="border-2 border-black"
             type="text"
             id="beneficiary"
             ref={nameInputRef}
