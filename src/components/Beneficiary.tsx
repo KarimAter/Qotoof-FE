@@ -1,4 +1,5 @@
 import React from 'react';
+import fetchHelper from '../utils/fetchHelpers';
 import Button from './Button';
 
 type Props = { name: string };
@@ -6,29 +7,29 @@ type Props = { name: string };
 function Beneficiary(props: Props) {
   const { name } = props;
 
+  
+
   const editBeneficiary = async () => {
-    await fetch(`http://localhost:8000/beneficiary/editBeneficiary/${name}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
+    await fetchHelper(
+      `http://localhost:8000/beneficiary/editBeneficiary/${name}`,
+      {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: 'Karim' }),
       },
-      body: JSON.stringify({ name: 'Karim' }),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
+    );
   };
 
   const deleteBeneficiary = async () => {
-    await fetch(`http://localhost:8000/beneficiary/deleteBeneficiary/${name}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
+    await fetchHelper(
+      `http://localhost:8000/beneficiary/deleteBeneficiary/${name}`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       },
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
+    );
   };
 
   return (

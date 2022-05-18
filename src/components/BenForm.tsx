@@ -21,7 +21,6 @@ function BenForm(props: Props) {
     })
       .then((res) => {
         console.log(res);
-
         // .json() converts JSON object to JS object
         return res.json();
       })
