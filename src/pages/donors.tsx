@@ -1,11 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 type Props = {}
 
-const donors = (props: Props) => {
-  return (
-    <div>donors page</div>
-  )
-}
+const donors = (props: Props) => (
+  <div>donors page</div>
+);
 
-export default donors
+export default donors;

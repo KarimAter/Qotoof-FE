@@ -1,10 +1,10 @@
-import BenForm from "../components/BenForm";
-import BenList from "../components/BenList";
+import BenForm from '../components/BenForm';
+import BenList from '../components/BenList';
 
-const Home = () => {
+function Home() {
   //  const [response, setResponse] = useState<string>("");
 
-  //Todo: useEffect on new cases addition
+  // Todo: useEffect on new cases addition
 
   //   const nameInputRef = useRef(null);
 
@@ -56,6 +56,6 @@ const Home = () => {
       <BenList />
     </div>
   );
-};
+}
 
 export default Home;
