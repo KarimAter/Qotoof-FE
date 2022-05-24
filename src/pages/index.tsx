@@ -1,5 +1,4 @@
-import BenForm from '../components/BenForm';
-import BenList from '../components/BenList';
+import Beneficiries from './beneficiaries';
 
 function Home() {
   //  const [response, setResponse] = useState<string>("");
@@ -50,10 +49,8 @@ function Home() {
   //      .catch((err) => console.log(err));
   //   };
   return (
-    <div className="flex flex-col w-full p-2">
-      <BenForm />
-
-      <BenList />
+    <div className="flex w-full flex-col p-2">
+      Home
     </div>
   );
 }

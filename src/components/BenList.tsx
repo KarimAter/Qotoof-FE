@@ -13,7 +13,7 @@ type Props = {};
 
 function BenList(): JSX.Element {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data, error } = useSWR<IBeneficiary[]>(`${API_ENDPOINT}/`, fetcher);
+  const { data, error } = useSWR<IBeneficiary[]>(`${API_ENDPOINT}beneficiary/`, fetcher);
 
   // let output
 

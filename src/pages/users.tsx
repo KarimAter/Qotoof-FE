@@ -2,6 +2,6 @@ import React from 'react';
 
 type Props = {};
 
-const donors = (props: Props) => <div>Users page</div>;
+const users = (props: Props) => <div>Users page</div>;
 
-export default donors;
+export default users;

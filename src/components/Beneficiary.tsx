@@ -12,7 +12,7 @@ function Beneficiary(ben: IBeneficiary) {
   const { id, name } = ben;
 
   const editBeneficiary = async () => {
-    await fetchHelper(`${API_ENDPOINT}/`, {
+    await fetchHelper(`${API_ENDPOINT}beneficiary/`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id, targetName: 'Karim' }),
@@ -20,7 +20,7 @@ function Beneficiary(ben: IBeneficiary) {
   };
 
   const deleteBeneficiary = async () => {
-    await fetchHelper(`${API_ENDPOINT}`, {
+    await fetchHelper(`${API_ENDPOINT}beneficiary/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

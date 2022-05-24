@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import React, { useRef, useState } from 'react';
 import API_ENDPOINT from '../utils/constants';
-import Button from './Button';
+import Button from '../components/Button';
 
 type Props = {};
 
@@ -14,7 +14,7 @@ function BenForm(props: Props) {
     e.preventDefault();
     const beneficiaryName = nameInputRef.current.value;
     try {
-      const res = await fetch(`${API_ENDPOINT}/`, {
+      const res = await fetch(`${API_ENDPOINT}beneficiary/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
