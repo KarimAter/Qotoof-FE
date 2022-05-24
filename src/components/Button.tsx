@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 interface IBeneficiaryProps {
   text: string;
-  handleClick: (e?: React.SyntheticEvent) => void;
+  handleClick?: (e?: React.SyntheticEvent) => void;
   type?: 'button' | 'submit' | 'reset';
 }
 
