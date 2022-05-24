@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import React, { useRef, useState } from 'react';
+import API_ENDPOINT from '../utils/constants';
 import Button from './Button';
 
 type Props = {};
@@ -12,22 +13,19 @@ function BenForm(props: Props) {
   const submitToBackend = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     const beneficiaryName = nameInputRef.current.value;
-    await fetch('http://localhost:8000/beneficiary/addBenefciary', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ beneficiaryName }),
-    })
-      .then((res) => {
-        console.log(res);
-        // .json() converts JSON object to JS object
-        return res.json();
-      })
-      .then((data) =>
-        setResponse(`${data.beneficiaryName} is added successfully`),
-      )
-      .catch((err) => console.log(err));
+    try {
+      const res = await fetch(`${API_ENDPOINT}/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ beneficiaryName }),
+      });
+      const data = await res.json();
+      setResponse(`${data.name} is added successfully`);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="bg-cyan-300">

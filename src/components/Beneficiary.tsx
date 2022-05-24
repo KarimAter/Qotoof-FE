@@ -1,4 +1,5 @@
 import React from 'react';
+import API_ENDPOINT from '../utils/constants';
 import fetchHelper from '../utils/fetchHelpers';
 import Button from './Button';
 
@@ -8,26 +9,21 @@ function Beneficiary(props: Props) {
   const { name } = props;
 
   const editBeneficiary = async () => {
-    await fetchHelper(
-      `http://localhost:8000/beneficiary/editBeneficiary/${name}`,
-      {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: 'Karim' }),
-      },
-    );
+    await fetchHelper(`${API_ENDPOINT}/:${name}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ currentName: name, targetName: 'Karim' }),
+    });
   };
 
   const deleteBeneficiary = async () => {
-    await fetchHelper(
-      `http://localhost:8000/beneficiary/deleteBeneficiary/${name}`,
-      {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+    await fetchHelper(`${API_ENDPOINT}/:${name}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    );
+      body: JSON.stringify({ currentName: name }),
+    });
   };
 
   return (
