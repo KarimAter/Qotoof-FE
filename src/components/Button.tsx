@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-interface IBeneficiaryProps {
+interface IButton {
   text: string;
   handleClick?: (e?: React.SyntheticEvent) => void;
   type?: 'button' | 'submit' | 'reset';
 }
 
-function Button(props: IBeneficiaryProps) {
+function Button(props: IButton) {
   const { text, handleClick, type } = props;
   return (
     <button

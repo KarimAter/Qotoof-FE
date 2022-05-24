@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable react/function-component-definition */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable import/named */
 import React from 'react';
@@ -11,9 +13,12 @@ type Props = {};
 //   name: string;
 // }
 
-function BenList(): JSX.Element {
+const BenList = (): JSX.Element => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data, error } = useSWR<IBeneficiary[]>(`${API_ENDPOINT}beneficiary/`, fetcher);
+  const { data, error } = useSWR<IBeneficiary[]>(
+    `${API_ENDPOINT}beneficiary/`,
+    fetcher,
+  );
 
   // let output
 
@@ -30,6 +35,6 @@ function BenList(): JSX.Element {
       </div>
     );
   }
-}
+};
 
 export default BenList;
