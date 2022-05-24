@@ -3,26 +3,29 @@ import API_ENDPOINT from '../utils/constants';
 import fetchHelper from '../utils/fetchHelpers';
 import Button from './Button';
 
-type Props = { name: string };
+export interface IBeneficiary {
+  id: number;
+  name: string;
+}
 
-function Beneficiary(props: Props) {
-  const { name } = props;
+function Beneficiary(ben: IBeneficiary) {
+  const { id, name } = ben;
 
   const editBeneficiary = async () => {
-    await fetchHelper(`${API_ENDPOINT}/:${name}`, {
+    await fetchHelper(`${API_ENDPOINT}/`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ currentName: name, targetName: 'Karim' }),
+      body: JSON.stringify({ id, targetName: 'Karim' }),
     });
   };
 
   const deleteBeneficiary = async () => {
-    await fetchHelper(`${API_ENDPOINT}/:${name}`, {
+    await fetchHelper(`${API_ENDPOINT}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ currentName: name }),
+      body: JSON.stringify({ id }),
     });
   };
 

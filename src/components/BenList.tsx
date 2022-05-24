@@ -1,17 +1,19 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable import/named */
 import React from 'react';
 import useSWR from 'swr';
 import API_ENDPOINT from '../utils/constants';
-import Beneficiary from './Beneficiary';
+import Beneficiary, { IBeneficiary } from './Beneficiary';
 
 type Props = {};
-interface IBeneficiary {
-  id: number;
-  name: string;
-}
+// interface IBeneficiary {
+//   id: number;
+//   name: string;
+// }
 
 function BenList(): JSX.Element {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data, error } = useSWR(`${API_ENDPOINT}/`, fetcher);
+  const { data, error } = useSWR<IBeneficiary[]>(`${API_ENDPOINT}/`, fetcher);
 
   // let output
 
@@ -22,7 +24,7 @@ function BenList(): JSX.Element {
       <div className=" h-full p-4">
         {data.map((beneficiary: IBeneficiary) => (
           <div key={beneficiary.id}>
-            <Beneficiary name={beneficiary.name} />
+            <Beneficiary {...beneficiary} />
           </div>
         ))}
       </div>
