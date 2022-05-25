@@ -47,7 +47,7 @@ function BenForm(props: Props) {
           name="name"
           label="benName"
           reg={{ ...register('name') }}
-          errors={errors}
+          error={errors.name}
         />
         <Button text="Add Beneficiary" type="submit" />
       </form>

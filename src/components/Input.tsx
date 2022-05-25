@@ -2,9 +2,10 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable react/function-component-definition */
 import React from 'react';
-import { FieldErrors } from 'react-hook-form/dist/types/errors';
+import { FieldError, FieldErrors } from 'react-hook-form/dist/types/errors';
 import { ChangeHandler, RefCallBack } from 'react-hook-form/dist/types/form';
 import { RegisterOptions } from 'react-hook-form/dist/types/validator';
+import { IDonation } from '../utils/constants';
 import { IBeneficiary } from './Beneficiary';
 
 interface IInput {
@@ -12,7 +13,7 @@ interface IInput {
   name: string;
   type?: 'text';
   label: string;
-  errors: FieldErrors<IBeneficiary>;
+  error: FieldError;
   reg: {
     onChange: ChangeHandler;
     onBlur: ChangeHandler;
@@ -29,7 +30,9 @@ interface IInput {
 }
 
 const Input = (props: IInput): JSX.Element => {
-  const { text, name, type, label, errors, reg } = props;
+  const { text, name, type, label, error, reg } = props;
+  console.log(error);
+  // console.log(reg);
   return (
     <div className="p-2">
       <label
@@ -46,9 +49,10 @@ const Input = (props: IInput): JSX.Element => {
           dark:border-green-500 dark:bg-gray-700 dark:text-green-400 dark:placeholder-green-500"
         {...reg}
       />
-      {errors && (
+      {error && (
         <p className="mt-2 text-sm text-green-600 dark:text-green-500">
-          <span className="font-medium">{errors?.name?.message}</span>
+          {/* <span className="font-medium">{typeof (errors?.[name]) === 'object':}</span> */}
+          ssss
         </p>
       )}
     </div>
