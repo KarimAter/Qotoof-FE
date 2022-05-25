@@ -30,19 +30,19 @@ function DonationForm(props: Props) {
   const submitData = async (donation: IDonation) => {
     console.log(donation);
     // e.preventDefault();
-    // try {
-    //   const res = await fetch(`${API_ENDPOINT}donation/`, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ donation }),
-    //   });
-    //   const donat = await res.json();
-    //   setResponse(`${donat.amount} is added successfully`);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      const res = await fetch(`${API_ENDPOINT}donation/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(donation ),
+      });
+      const donat = await res.json();
+      setResponse(`${donat.amount} is added successfully`);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="w-full">
