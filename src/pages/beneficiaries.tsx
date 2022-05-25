@@ -10,10 +10,6 @@ import Beneficiary, { IBeneficiary } from '../components/Beneficiary';
 import Button from '../components/Button';
 
 type Props = {};
-// interface IBeneficiary {
-//   id: number;
-//   name: string;
-// }
 
 function beneficiaries() {
   const router = useRouter();
