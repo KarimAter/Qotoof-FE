@@ -40,7 +40,7 @@ const Input = (props: IInput): JSX.Element => {
       <input
         type={type}
         id={name}
-        className=" block w-1/2 rounded-lg border border-green-500 bg-green-50 p-2.5 text-sm
+        className="  rounded-lg border border-green-500 bg-green-50 p-2.5 text-sm
          text-green-900 placeholder-green-700 focus:border-green-500 focus:ring-green-500
           dark:border-green-500 dark:bg-gray-700 dark:text-green-400 dark:placeholder-green-500"
         {...reg}

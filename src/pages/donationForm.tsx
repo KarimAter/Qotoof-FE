@@ -61,14 +61,11 @@ function DonationForm(props: Props) {
   return (
     <div className="w-full">
       <h2>New Beneficiary</h2>
-      <form onSubmit={handleSubmit(submitData)}>
+      <form onSubmit={handleSubmit(submitData)} className="ml-8 block w-1/3">
         <Select
           error={errors.donor?.name}
           options={donorsList}
           control={control}
-          handleSelect={(option) => {
-            console.log(option);
-          }}
         />
         <Input
           type="number"

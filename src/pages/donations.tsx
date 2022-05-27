@@ -26,7 +26,7 @@ const Donations = (props: Props): JSX.Element => {
   if (data) {
     return (
       <div className="w-full m-2 overflow-x-auto shadow-md sm:rounded-lg">
-        <Button text="Create new Donor" type="submit" handleClick={goToForm} />
+        <Button text="Create new Donation" type="submit" handleClick={goToForm} />
         <div className="p-4">
           <label htmlFor="table-search" className="sr-only">
             Search
