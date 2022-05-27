@@ -7,7 +7,7 @@ export interface IUser {
   role: 'ADMIN' | 'GUEST' | 'SUPER' | 'EDITOR';
 }
 export interface IDonor {
-  donorId: number;
+  id: number;
   name: string;
   referral: IUser;
 }

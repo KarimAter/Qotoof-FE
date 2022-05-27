@@ -31,7 +31,7 @@ interface IInput {
 
 const Input = (props: IInput): JSX.Element => {
   const { text, name, type, label, error, reg } = props;
-  console.log(error);
+  // console.log(error);
   // console.log(reg);
   return (
     <div className="p-2">

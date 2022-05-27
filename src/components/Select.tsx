@@ -1,23 +1,41 @@
 /* eslint-disable arrow-body-style */
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/function-component-definition */
 import React from 'react';
-import ReactSelect from 'react-select';
+import { Control, Controller, FieldError } from 'react-hook-form';
+import ReactSelect, { ActionMeta } from 'react-select';
+import { IDonation, IDonor } from '../utils/constants';
 
 type Props = {
-  options: string[];
+  options: IDonor[];
+  control: Control<IDonation>;
+  handleSelect: (
+    newValue: { label: string; value: string },
+    actionMeta: ActionMeta<{ label: string; value: string }>,
+  ) => void;
+  error: FieldError;
 };
 
-const donors: { label: string; value: string }[] = [
-  { label: '3amer', value: '3amer' },
-  { label: 'Hussein', value: 'Hussein' },
-  { label: 'Zizo', value: 'Zizo' },
-  { label: 'Diaa', value: 'Diaa' },
-];
-
-const Select = ({ options }: Props) => {
-  const selections = options.map((o) => ({ label: o, value: o }));
-  console.log(selections);
-  return <ReactSelect instanceId="unique" options={selections} isClearable />;
+const Select = ({ options, error, control, handleSelect }: Props) => {
+  return (
+    <>
+      <Controller
+        name="donor"
+        control={control}
+        render={({ field }) => (
+          <ReactSelect
+            {...field}
+            instanceId="unique"
+            options={options}
+            isClearable
+            getOptionLabel={(option) => option.name}
+            getOptionValue={(option) => option.name}
+          />
+        )}
+      />
+      <p>{error?.message}</p>
+    </>
+  );
 };
 
 export default Select;

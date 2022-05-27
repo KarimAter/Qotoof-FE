@@ -1,20 +1,22 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import Head from 'next/head';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import API_ENDPOINT, { IDonation } from '../utils/constants';
+import { ActionMeta } from 'react-select';
+import API_ENDPOINT, { IDonation, IDonor } from '../utils/constants';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import Select from '../components/Select';
-import { IDonor } from './donors';
 import useFetcher from '../utils/useFetcher';
 
 type Props = {};
 
 const schema = yup.object().shape({
-  donor: yup.object().shape({ name: yup.string().min(4) }),
+  donor: yup.object().shape({
+    name: yup.string().required('donor name is required'),
+    id: yup.number().required('donor id is required'),
+  }),
   amount: yup.number().required().min(0),
   category: yup.string().required().min(0),
 });
@@ -26,11 +28,12 @@ function DonationForm(props: Props) {
     register,
     handleSubmit,
     watch,
+    control,
     formState: { errors },
   } = useForm<IDonation>({ resolver: yupResolver(schema) });
 
-  const donorsList = useFetcher(`donor`, (arr: IDonor[]): string[] =>
-    arr.map((d) => d.name),
+  const donorsList:IDonor[] = useFetcher(`donor`, (arr: IDonor[]): IDonor[] =>
+    arr.map((d) => d),
   );
 
   const submitData = async (donation: IDonation) => {
@@ -49,11 +52,19 @@ function DonationForm(props: Props) {
       console.log(error);
     }
   };
+
   return (
     <div className="w-full">
       <h2>New Beneficiary</h2>
       <form onSubmit={handleSubmit(submitData)}>
-        <Select options={donorsList} />
+        <Select
+          error={errors.donor?.name}
+          options={donorsList}
+          control={control}
+          handleSelect={(option) => {
+            console.log(option);
+          }}
+        />
         <Input
           name="amount"
           label="amount"
