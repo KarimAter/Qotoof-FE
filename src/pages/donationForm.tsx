@@ -4,11 +4,12 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { ActionMeta } from 'react-select';
-import API_ENDPOINT, { IDonation, IDonor } from '../utils/constants';
+import API_ENDPOINT from '../utils/constants';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import Select from '../components/Select';
 import useFetcher from '../utils/useFetcher';
+import { IDonation, IDonor } from '../utils/interfaces';
 
 type Props = {};
 
@@ -17,8 +18,12 @@ const schema = yup.object().shape({
     name: yup.string().required('donor name is required'),
     id: yup.number().required('donor id is required'),
   }),
-  amount: yup.number().required().min(0),
-  category: yup.string().required().min(0),
+  amount: yup
+    .number()
+    .typeError('Amount has to be a number')
+    .required('donation amount is required')
+    .min(0),
+  category: yup.string().required('category is required').min(0),
 });
 
 function DonationForm(props: Props) {
@@ -32,7 +37,7 @@ function DonationForm(props: Props) {
     formState: { errors },
   } = useForm<IDonation>({ resolver: yupResolver(schema) });
 
-  const donorsList:IDonor[] = useFetcher(`donor`, (arr: IDonor[]): IDonor[] =>
+  const donorsList: IDonor[] = useFetcher(`donor`, (arr: IDonor[]): IDonor[] =>
     arr.map((d) => d),
   );
 
@@ -66,12 +71,14 @@ function DonationForm(props: Props) {
           }}
         />
         <Input
+          type="number"
           name="amount"
           label="amount"
           reg={{ ...register('amount') }}
           error={errors.amount}
         />
         <Input
+          type="text"
           name="category"
           label="category"
           reg={{ ...register('category') }}

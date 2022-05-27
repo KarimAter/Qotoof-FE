@@ -2,16 +2,13 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable react/function-component-definition */
 import React from 'react';
-import { FieldError, FieldErrors } from 'react-hook-form/dist/types/errors';
+import { FieldError } from 'react-hook-form/dist/types/errors';
 import { ChangeHandler, RefCallBack } from 'react-hook-form/dist/types/form';
-import { RegisterOptions } from 'react-hook-form/dist/types/validator';
-import { IDonation } from '../utils/constants';
-import { IBeneficiary } from './Beneficiary';
 
 interface IInput {
   text?: string;
   name: string;
-  type?: 'text';
+  type?: 'text' | 'number';
   label: string;
   error: FieldError;
   reg: {
@@ -30,9 +27,8 @@ interface IInput {
 }
 
 const Input = (props: IInput): JSX.Element => {
-  const { text, name, type, label, error, reg } = props;
-  // console.log(error);
-  // console.log(reg);
+  const { name, type, label, error, reg } = props;
+
   return (
     <div className="p-2">
       <label
@@ -51,8 +47,7 @@ const Input = (props: IInput): JSX.Element => {
       />
       {error && (
         <p className="mt-2 text-sm text-green-600 dark:text-green-500">
-          {/* <span className="font-medium">{typeof (errors?.[name]) === 'object':}</span> */}
-          ssss
+          {error?.message}
         </p>
       )}
     </div>

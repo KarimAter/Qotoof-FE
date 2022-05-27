@@ -1,6 +1,5 @@
 import React from 'react';
-import { IDonation } from '../utils/constants';
-import { IBeneficiary } from './Beneficiary';
+import { IBeneficiary, IDonation } from '../utils/interfaces';
 
 interface Props {
   models: (IDonation | IBeneficiary)[];
@@ -8,12 +7,10 @@ interface Props {
 
 function Table({ models }: Props) {
   console.log(models[0]);
-  // const columnHeads = Object.keys(models[0]);
   const columnHeads = ['Id', 'Amount', 'category', 'donorId', 'donorName'];
   return (
     <table className="mx-auto w-full table-fixed text-center  capitalize  dark:text-gray-400">
       <thead className=" bg-indigo-400  text-base  font-extrabold dark:bg-gray-700 dark:text-gray-400">
-        {/* <tr className="border-double"> */}
         <th scope="col" className="border-2 border-black p-2" colSpan={1}>
           <div className="flex items-center">
             <input
@@ -39,7 +36,6 @@ function Table({ models }: Props) {
             {h}
           </th>
         ))}
-        {/* </tr> */}
       </thead>
       <tbody>
         {models.map((model) => (

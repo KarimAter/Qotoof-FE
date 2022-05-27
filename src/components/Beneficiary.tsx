@@ -1,12 +1,8 @@
 import React from 'react';
 import API_ENDPOINT from '../utils/constants';
 import fetchHelper from '../utils/fetchHelpers';
+import { IBeneficiary } from '../utils/interfaces';
 import Button from './Button';
-
-export interface IBeneficiary {
-  id: number;
-  name: string;
-}
 
 function Beneficiary(ben: IBeneficiary) {
   const { id, name } = ben;

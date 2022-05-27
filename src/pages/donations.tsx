@@ -1,12 +1,12 @@
 /* eslint-disable consistent-return */
 /* eslint-disable react/function-component-definition */
 import router from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import useSWR from 'swr';
 import Button from '../components/Button';
 import Table from '../components/Table';
-import API_ENDPOINT, { IDonation } from '../utils/constants';
-import fetchHelper from '../utils/fetchHelpers';
+import API_ENDPOINT from '../utils/constants';
+import { IDonation } from '../utils/interfaces';
 
 type Props = {};
 
@@ -17,19 +17,6 @@ const Donations = (props: Props): JSX.Element => {
     `${API_ENDPOINT}donation/`,
     fetcher,
   );
-  // useEffect(() => {
-  //   const api = async () => {
-  //     const data = await fetch(`${API_ENDPOINT}donation/`, {
-  //       method: 'GET',
-  //     });
-  //     setDonations(await data.json());
-  //   };
-
-  //   console.log(donations);
-  //   console.log('rerenderd');
-
-  //   api();
-  // }, [donations]);
   const goToForm = (e?: React.SyntheticEvent) => {
     router.push('/donationForm');
   };
@@ -38,14 +25,6 @@ const Donations = (props: Props): JSX.Element => {
   if (!data) return <h4> Loading </h4>;
   if (data) {
     return (
-    // <div classNameName=" h-full w-full p-4 ">
-
-      //   {donations.map((donation) => (
-      //     <div key={donation.donationId}>
-      //       {donation.amount} {donation.category} {donation.donor.name}
-      //     </div>
-      //   ))}
-      // </div>
       <div className="w-full m-2 overflow-x-auto shadow-md sm:rounded-lg">
         <Button text="Create new Donor" type="submit" handleClick={goToForm} />
         <div className="p-4">
@@ -76,24 +55,6 @@ const Donations = (props: Props): JSX.Element => {
           </div>
         </div>
         {data && <Table models={data} />}
-
-        {/* <TableHead
-          fields={donations}
-          columnHeads={['ID', 'Donor', 'Amount', 'Category']}
-        />
-        <tbody>
-          {donations.map((donation) => (
-            <TableRow
-              key={donation.id}
-              fields={[
-                donation.id,
-                donation.donor.name,
-                donation.amount,
-                donation.category,
-              ]}
-            />
-          ))}
-        </tbody> */}
       </div>
     );
   }

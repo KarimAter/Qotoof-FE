@@ -2,23 +2,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
 import useSWR from 'swr';
-import { IBeneficiary } from '../components/Beneficiary';
 import API_ENDPOINT from '../utils/constants';
+import { IDonor } from '../utils/interfaces';
 
 type Props = {};
-
-export interface IUser {
-  id: number;
-  name: string;
-  email?: string;
-  password?: string;
-  role: 'ADMIN' | 'GUEST' | 'SUPER' | 'EDITOR';
-}
-export interface IDonor {
-  id: number;
-  name: string;
-  referral: IUser;
-}
 
 const donors = (props: Props): JSX.Element => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -33,7 +20,6 @@ const donors = (props: Props): JSX.Element => {
       <div className=" h-full p-4">
         {data.map((donor) => (
           <div key={donor.id}>
-            {/* <Beneficiary {...beneficiary} /> */}
             {`${donor.name}${donor.referral}`}
           </div>
         ))}

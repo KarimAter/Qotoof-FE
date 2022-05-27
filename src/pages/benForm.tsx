@@ -1,13 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import Head from 'next/head';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import API_ENDPOINT from '../utils/constants';
 import Button from '../components/Button';
-import { IBeneficiary } from '../components/Beneficiary';
 import Input from '../components/Input';
+import { IBeneficiary } from '../utils/interfaces';
 
 type Props = {};
 
@@ -24,7 +23,6 @@ function BenForm(props: Props) {
   } = useForm<IBeneficiary>({ resolver: yupResolver(schema) });
 
   const submitData = async (ben: IBeneficiary) => {
-    // e.preventDefault();
     try {
       const res = await fetch(`${API_ENDPOINT}beneficiary/`, {
         method: 'POST',

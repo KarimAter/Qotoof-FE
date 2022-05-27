@@ -4,7 +4,7 @@
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 import ReactSelect, { ActionMeta } from 'react-select';
-import { IDonation, IDonor } from '../utils/constants';
+import { IDonation, IDonor } from '../utils/interfaces';
 
 type Props = {
   options: IDonor[];
@@ -16,7 +16,7 @@ type Props = {
   error: FieldError;
 };
 
-const Select = ({ options, error, control, handleSelect }: Props) => {
+const Select = ({ options, error, control }: Props) => {
   return (
     <>
       <Controller
