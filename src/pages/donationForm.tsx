@@ -1,16 +1,15 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-props-no-spreading */
 import Head from 'next/head';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import API_ENDPOINT, { IDonation } from '../utils/constants';
 import Button from '../components/Button';
-import { IBeneficiary } from '../components/Beneficiary';
 import Input from '../components/Input';
 import Select from '../components/Select';
 import { IDonor } from './donors';
+import useFetcher from '../utils/useFetcher';
 
 type Props = {};
 
@@ -22,7 +21,6 @@ const schema = yup.object().shape({
 
 function DonationForm(props: Props) {
   const [response, setResponse] = useState<JSX.Element | string>('');
-  const [donorsList, setDonorList] = useState<string[]>([]);
 
   const {
     register,
@@ -31,22 +29,12 @@ function DonationForm(props: Props) {
     formState: { errors },
   } = useForm<IDonation>({ resolver: yupResolver(schema) });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetch(`${API_ENDPOINT}donor/`);
-      const result = await data.json();
-      setDonorList(result.map((donor: IDonor) => donor.name));
-    };
-    try {
-      fetchData();
-    } catch (e) {
-      console.log(e);
-    }
-  }, []);
+  const donorsList = useFetcher(`donor`, (arr: IDonor[]): string[] =>
+    arr.map((d) => d.name),
+  );
 
   const submitData = async (donation: IDonation) => {
     console.log(donation);
-    // e.preventDefault();
     try {
       const res = await fetch(`${API_ENDPOINT}donation/`, {
         method: 'POST',
@@ -65,12 +53,6 @@ function DonationForm(props: Props) {
     <div className="w-full">
       <h2>New Beneficiary</h2>
       <form onSubmit={handleSubmit(submitData)}>
-        {/* <Input
-          name="donor.name"
-          label="Donor Name"
-          reg={{ ...register('donor.name') }}
-          error={errors.donor?.name}
-        /> */}
         <Select options={donorsList} />
         <Input
           name="amount"
