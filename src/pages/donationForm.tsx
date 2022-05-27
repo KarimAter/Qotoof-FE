@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-props-no-spreading */
 import Head from 'next/head';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -8,6 +9,8 @@ import API_ENDPOINT, { IDonation } from '../utils/constants';
 import Button from '../components/Button';
 import { IBeneficiary } from '../components/Beneficiary';
 import Input from '../components/Input';
+import Select from '../components/Select';
+import { IDonor } from './donors';
 
 type Props = {};
 
@@ -19,6 +22,7 @@ const schema = yup.object().shape({
 
 function DonationForm(props: Props) {
   const [response, setResponse] = useState<JSX.Element | string>('');
+  const [donorsList, setDonorList] = useState<string[]>([]);
 
   const {
     register,
@@ -26,6 +30,19 @@ function DonationForm(props: Props) {
     watch,
     formState: { errors },
   } = useForm<IDonation>({ resolver: yupResolver(schema) });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetch(`${API_ENDPOINT}donor/`);
+      const result = await data.json();
+      setDonorList(result.map((donor: IDonor) => donor.name));
+    };
+    try {
+      fetchData();
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
 
   const submitData = async (donation: IDonation) => {
     console.log(donation);
@@ -36,7 +53,7 @@ function DonationForm(props: Props) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(donation ),
+        body: JSON.stringify(donation),
       });
       const donat = await res.json();
       setResponse(`${donat.amount} is added successfully`);
@@ -48,12 +65,13 @@ function DonationForm(props: Props) {
     <div className="w-full">
       <h2>New Beneficiary</h2>
       <form onSubmit={handleSubmit(submitData)}>
-        <Input
+        {/* <Input
           name="donor.name"
           label="Donor Name"
           reg={{ ...register('donor.name') }}
           error={errors.donor?.name}
-        />
+        /> */}
+        <Select options={donorsList} />
         <Input
           name="amount"
           label="amount"
