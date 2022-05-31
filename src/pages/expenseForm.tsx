@@ -1,21 +1,29 @@
-/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable arrow-body-style */
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import API_ENDPOINT from '../utils/constants';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import Select from '../components/Select';
+import API_ENDPOINT from '../utils/constants';
+import {
+  IBeneficiary,
+  IDonation,
+  IDonor,
+  IExpense,
+  IUser,
+} from '../utils/interfaces';
 import useFetcher from '../utils/useFetcher';
-import { IDonation, IDonor } from '../utils/interfaces';
-
-type Props = {};
 
 const schema = yup.object().shape({
-  donor: yup.object().shape({
-    name: yup.string().required('donor name is required'),
-    id: yup.number().required('donor id is required'),
+  beneficiary: yup.object().shape({
+    name: yup.string().required('ben name is required'),
+    id: yup.number().required('ben id is required'),
+  }),
+  user: yup.object().shape({
+    name: yup.string().required('user name is required'),
+    id: yup.number().required('user id is required'),
   }),
   amount: yup
     .number()
@@ -25,7 +33,9 @@ const schema = yup.object().shape({
   category: yup.string().required('category is required').min(0),
 });
 
-function DonationForm(props: Props) {
+type Props = {};
+
+function ExpenseForm(props: Props) {
   const [response, setResponse] = useState<JSX.Element | string>('');
 
   const {
@@ -34,21 +44,25 @@ function DonationForm(props: Props) {
     watch,
     control,
     formState: { errors },
-  } = useForm<IDonation>({ resolver: yupResolver(schema) });
+  } = useForm<IExpense>({ resolver: yupResolver(schema) });
 
-  const donorsList: IDonor[] = useFetcher(`donor`, (arr: IDonor[]): IDonor[] =>
+  const usersList: IUser[] = useFetcher(`user`, (arr: IUser[]): IUser[] =>
     arr.map((d) => d),
   );
+  const benList: IBeneficiary[] = useFetcher(
+    `beneficiary`,
+    (arr: IBeneficiary[]): IBeneficiary[] => arr.map((d) => d),
+  );
 
-  const submitData = async (donation: IDonation) => {
-    console.log(donation);
+  const submitData = async (expense: IExpense) => {
+    console.log(expense);
     try {
-      const res = await fetch(`${API_ENDPOINT}donation/`, {
+      const res = await fetch(`${API_ENDPOINT}expense/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(donation),
+        body: JSON.stringify(expense),
       });
       const donat = await res.json();
       setResponse(`${donat.amount} is added successfully`);
@@ -59,13 +73,19 @@ function DonationForm(props: Props) {
 
   return (
     <div className="w-full">
-      <h2>New Beneficiary</h2>
+      <h2>New Expense</h2>
       <form onSubmit={handleSubmit(submitData)} className="ml-8 block w-1/3">
         <Select
-          error={errors.donor?.name}
-          options={donorsList}
+          error={errors.beneficiary?.name}
+          options={benList}
           control={control}
-          fieldLabel='donor'
+          fieldLabel="beneficiary"
+        />
+        <Select
+          error={errors.user?.name}
+          options={usersList}
+          control={control}
+          fieldLabel="user"
         />
         <Input
           type="number"
@@ -82,11 +102,11 @@ function DonationForm(props: Props) {
           error={errors.category}
         />
 
-        <Button text="Add Donation" type="submit" />
+        <Button text="Add Expense" type="submit" />
       </form>
       <h4>{response}</h4>
     </div>
   );
 }
 
-export default DonationForm;
+export default ExpenseForm;

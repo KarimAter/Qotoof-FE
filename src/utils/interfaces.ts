@@ -25,3 +25,15 @@ export interface IBeneficiary {
   id: number;
   name: string;
 }
+export interface IExpense {
+  id: number;
+  date: string;
+  amount: number;
+  category: string;
+  status: string;
+  paymentType: string;
+  comment: string;
+  project: string;
+  user: IUser;
+  beneficiary: IBeneficiary;
+}
