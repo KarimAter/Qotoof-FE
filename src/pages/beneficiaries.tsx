@@ -20,7 +20,7 @@ function beneficiaries() {
     fetcher,
   );
 
-  const goToForm = (e?: React.SyntheticEvent) => {
+  const goToForm = () => {
     router.push('/benForm');
   };
 

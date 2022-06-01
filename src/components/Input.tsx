@@ -10,6 +10,7 @@ interface IInput {
   name: string;
   type?: 'text' | 'number';
   label: string;
+  value: string;
   error: FieldError;
   reg: {
     onChange: ChangeHandler;
@@ -27,7 +28,7 @@ interface IInput {
 }
 
 const Input = (props: IInput): JSX.Element => {
-  const { name, type, label, error, reg } = props;
+  const { name, type, label, error, reg, value } = props;
 
   return (
     <div className="p-2">
@@ -40,6 +41,7 @@ const Input = (props: IInput): JSX.Element => {
       <input
         type={type}
         id={name}
+        defaultValue={value}
         className="  rounded-lg border border-green-500 bg-green-50 p-2.5 text-sm
          text-green-900 placeholder-green-700 focus:border-green-500 focus:ring-green-500
           dark:border-green-500 dark:bg-gray-700 dark:text-green-400 dark:placeholder-green-500"

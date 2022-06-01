@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React from 'react';
 import API_ENDPOINT from '../utils/constants';
 import fetchHelper from '../utils/fetchHelpers';
@@ -6,13 +7,10 @@ import Button from './Button';
 
 function Beneficiary(ben: IBeneficiary) {
   const { id, name } = ben;
+  const router = useRouter();
 
   const editBeneficiary = async () => {
-    await fetchHelper(`${API_ENDPOINT}beneficiary/`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id, targetName: 'Karim' }),
-    });
+    router.push({ pathname: '/benForm', query: { ...ben } });
   };
 
   const deleteBeneficiary = async () => {
