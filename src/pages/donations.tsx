@@ -11,7 +11,6 @@ import { IDonation } from '../utils/interfaces';
 type Props = {};
 
 const Donations = (props: Props): JSX.Element => {
-
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const { data, error } = useSWR<IDonation[]>(
     `${API_ENDPOINT}donation/`,
@@ -25,8 +24,12 @@ const Donations = (props: Props): JSX.Element => {
   if (!data) return <h4> Loading </h4>;
   if (data) {
     return (
-      <div className="w-full m-2 overflow-x-auto shadow-md sm:rounded-lg">
-        <Button text="Create new Donation" type="submit" handleClick={goToForm} />
+      <div className="m-2 w-full overflow-x-auto shadow-md sm:rounded-lg">
+        <Button
+          text="Create new Donation"
+          type="submit"
+          handleClick={goToForm}
+        />
         <div className="p-4">
           <label htmlFor="table-search" className="sr-only">
             Search
@@ -54,7 +57,7 @@ const Donations = (props: Props): JSX.Element => {
             />
           </div>
         </div>
-        {data && <Table models={data} />}
+        {data.length > 0 && <Table models={data} />}
       </div>
     );
   }

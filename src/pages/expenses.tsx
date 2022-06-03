@@ -57,7 +57,7 @@ const Expenses = (props: Props): JSX.Element => {
             />
           </div>
         </div>
-        {data && <Table models={data} />}
+        {data.length > 0 && <Table models={data} />}
       </div>
     );
   }
