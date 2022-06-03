@@ -1,7 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable import/named */
 import React from 'react';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
@@ -12,7 +8,7 @@ import { IBeneficiary } from '../utils/interfaces';
 
 type Props = {};
 
-function beneficiaries() {
+const beneficiaries = (): JSX.Element => {
   const router = useRouter();
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const { data, error } = useSWR<IBeneficiary[]>(
@@ -42,6 +38,6 @@ function beneficiaries() {
       </div>
     );
   }
-}
+};
 
 export default beneficiaries;

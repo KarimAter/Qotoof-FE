@@ -66,6 +66,10 @@
       }
     ],
     "react/require-default-props": "off",
-    "react/button-has-type": "off"
+    "react/button-has-type": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/function-component-definition":"off",
+    "react-hooks/rules-of-hooks":"off",
+    "consistent-return":"off"
   }
 }

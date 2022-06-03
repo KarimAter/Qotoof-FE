@@ -1,6 +1,3 @@
-/* eslint-disable arrow-body-style */
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/function-component-definition */
 import React from 'react';
 import { Controller, FieldError } from 'react-hook-form';
 import ReactSelect from 'react-select';

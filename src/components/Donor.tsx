@@ -1,5 +1,3 @@
-/* eslint-disable arrow-body-style */
-/* eslint-disable react/function-component-definition */
 import { useRouter } from 'next/router';
 import React from 'react';
 import { IDonor } from '../utils/interfaces';

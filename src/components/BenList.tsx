@@ -1,7 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable react/function-component-definition */
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable import/named */
 import React from 'react';
 import useSWR from 'swr';
 import API_ENDPOINT from '../utils/constants';

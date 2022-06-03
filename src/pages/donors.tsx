@@ -1,6 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable consistent-return */
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useRouter } from 'next/router';
 import React from 'react';
 import useSWR from 'swr';

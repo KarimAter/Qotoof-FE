@@ -6,7 +6,6 @@ interface Props {
 }
 
 function Table({ models }: Props) {
-  // const columnHeads = ['Id', 'Amount', 'category', 'donorId', 'donorName'];
   const columnHeads = Object.keys(models[0]);
   return (
     <table className="mx-auto w-full table-fixed text-center  capitalize  dark:text-gray-400">

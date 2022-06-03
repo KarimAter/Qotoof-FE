@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import NavBar from '../components/NavBar';

@@ -1,5 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable react/function-component-definition */
 import router from 'next/router';
 import React from 'react';
 import useSWR from 'swr';

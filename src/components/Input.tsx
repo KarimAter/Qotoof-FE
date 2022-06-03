@@ -1,6 +1,4 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable arrow-body-style */
-/* eslint-disable react/function-component-definition */
+
 import React from 'react';
 import { FieldError } from 'react-hook-form/dist/types/errors';
 import { ChangeHandler, RefCallBack } from 'react-hook-form/dist/types/form';
