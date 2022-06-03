@@ -2,13 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/function-component-definition */
 import React from 'react';
-import {
-  Control,
-  Controller,
-  FieldError,
-  set,
-  useFormContext,
-} from 'react-hook-form';
+import { Controller, FieldError } from 'react-hook-form';
 import ReactSelect from 'react-select';
 import {
   IBeneficiary,
@@ -23,10 +17,11 @@ type Props = {
   control: any;
   error: FieldError;
   fieldLabel: string;
+  value?: any;
 };
 
-const Select = ({ options, error, control, fieldLabel }: Props) => {
-  console.log(control);
+const Select = ({ options, error, control, fieldLabel, value }: Props) => {
+  console.log(error);
   return (
     <div
       className=" rounded-lg border-green-500 bg-green-50 p-2 text-sm
@@ -42,6 +37,7 @@ const Select = ({ options, error, control, fieldLabel }: Props) => {
       <Controller
         control={control}
         name={fieldLabel}
+        defaultValue={value}
         render={({ field }) => (
           <ReactSelect
             className=" rounded-lg"

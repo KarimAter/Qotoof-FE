@@ -10,8 +10,8 @@ const Donor = (donor: IDonor) => {
   const router = useRouter();
   const editDonor = async () => {
     router.push({
-      pathname: '/donForm',
-      query: { id, name, referral: referral.id },
+      pathname: '/donorForm',
+      query: { donor: JSON.stringify(donor) },
     });
   };
 
