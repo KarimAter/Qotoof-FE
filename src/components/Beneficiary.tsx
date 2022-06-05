@@ -14,7 +14,7 @@ function Beneficiary(ben: IBeneficiary) {
   };
 
   const deleteBeneficiary = async () => {
-    await fetchHelper(`${API_ENDPOINT}beneficiary/`, {
+    await fetchHelper(`${API_ENDPOINT}/beneficiary/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

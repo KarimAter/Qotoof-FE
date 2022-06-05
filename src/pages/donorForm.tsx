@@ -45,7 +45,7 @@ function DonorForm() {
 
   const submitData = async (donor: IDonor) => {
     if (updatedDonor) {
-      await fetchHelper(`${API_ENDPOINT}donor/`, {
+      await fetchHelper(`${API_ENDPOINT}/donor/`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ function DonorForm() {
         }),
       });
     } else {
-      await fetchHelper(`${API_ENDPOINT}donor/`, {
+      await fetchHelper(`${API_ENDPOINT}/donor/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -8,12 +9,11 @@ import Select from '../components/Select';
 import API_ENDPOINT from '../utils/constants';
 import {
   IBeneficiary,
-  IDonation,
-  IDonor,
   IExpense,
   IUser,
 } from '../utils/interfaces';
 import useFetcher from '../utils/useFetcher';
+import fetchHelper from '../utils/fetchHelpers';
 
 const schema = yup.object().shape({
   beneficiary: yup.object().shape({
@@ -37,6 +37,18 @@ type Props = {};
 function ExpenseForm(props: Props) {
   const [response, setResponse] = useState<JSX.Element | string>('');
 
+  const router = useRouter();
+  let updatedExpense: IExpense;
+  const {payload} = router.query;
+
+  if (payload) {
+    const updatedExpenseJson = Array.isArray(payload)
+      ? payload[0]
+      : payload;
+    updatedExpense = JSON.parse(updatedExpenseJson);
+  }
+  console.log(updatedExpense);
+
   const {
     register,
     handleSubmit,
@@ -52,21 +64,29 @@ function ExpenseForm(props: Props) {
     `beneficiary`,
     (arr: IBeneficiary[]): IBeneficiary[] => arr.map((d) => d),
   );
-
+  console.log(errors)
   const submitData = async (expense: IExpense) => {
-    console.log(expense);
-    try {
-      const res = await fetch(`${API_ENDPOINT}expense/`, {
+    if (updatedExpense) {
+      await fetchHelper(`${API_ENDPOINT}/expense/`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: updatedExpense.id,
+          ...expense,
+        }),
+      });
+    } else {
+      await fetchHelper(`${API_ENDPOINT}/expense/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(expense),
+        body: JSON.stringify({
+          ...expense,
+        }),
       });
-      const donat = await res.json();
-      setResponse(`${donat.amount} is added successfully`);
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -79,12 +99,14 @@ function ExpenseForm(props: Props) {
           options={benList}
           control={control}
           fieldLabel="beneficiary"
+          value={updatedExpense?.beneficiary}
         />
         <Select
           error={errors.user?.name}
           options={usersList}
           control={control}
           fieldLabel="user"
+          value={updatedExpense?.user}
         />
         <Input
           type="number"
@@ -92,6 +114,7 @@ function ExpenseForm(props: Props) {
           label="amount"
           reg={{ ...register('amount') }}
           error={errors.amount}
+          value={updatedExpense?.amount}
         />
         <Input
           type="text"
@@ -99,6 +122,7 @@ function ExpenseForm(props: Props) {
           label="category"
           reg={{ ...register('category') }}
           error={errors.category}
+          value={updatedExpense?.category}
         />
 
         <Button text="Add Expense" type="submit" />

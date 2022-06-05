@@ -11,7 +11,7 @@ type Props = {};
 const Donations = (props: Props): JSX.Element => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const { data, error } = useSWR<IDonation[]>(
-    `${API_ENDPOINT}donation/`,
+    `${API_ENDPOINT}/donation/`,
     fetcher,
   );
   const goToForm = (e?: React.SyntheticEvent) => {

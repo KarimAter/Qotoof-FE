@@ -31,12 +31,14 @@ function DonationForm(props: Props) {
 
   const router = useRouter();
   let updatedDonation: IDonation;
+  const { payload } = router.query;
 
-  if (router.query.donation) {
-    const updatedDonationO = Array.isArray(router.query.donation)
-      ? router.query.donation[0]
-      : router.query.donation;
-    updatedDonation = JSON.parse(updatedDonationO);
+
+  if (payload) {
+    const updatedDonationJson = Array.isArray(payload)
+      ? payload[0]
+      : payload;
+    updatedDonation = JSON.parse(updatedDonationJson);
   }
 
   const {
@@ -53,7 +55,7 @@ function DonationForm(props: Props) {
 
   const submitData = async (donation: IDonation) => {
     if (updatedDonation) {
-      await fetchHelper(`${API_ENDPOINT}donation/`, {
+      await fetchHelper(`${API_ENDPOINT}/donation/`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -64,7 +66,7 @@ function DonationForm(props: Props) {
         }),
       });
     } else {
-      await fetchHelper(`${API_ENDPOINT}donation/`, {
+      await fetchHelper(`${API_ENDPOINT}/donation/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -85,7 +87,7 @@ function DonationForm(props: Props) {
           options={donorsList}
           control={control}
           fieldLabel="donor"
-          value={updatedDonation.donor}
+          value={updatedDonation?.donor}
         />
         <Input
           type="number"
@@ -93,7 +95,7 @@ function DonationForm(props: Props) {
           label="amount"
           reg={{ ...register('amount') }}
           error={errors.amount}
-          value={updatedDonation.amount}
+          value={updatedDonation?.amount}
         />
         <Input
           type="text"
@@ -101,7 +103,7 @@ function DonationForm(props: Props) {
           label="category"
           reg={{ ...register('category') }}
           error={errors.category}
-          value={updatedDonation.category}
+          value={updatedDonation?.category}
         />
 
         <Button text="Add Donation" type="submit" />

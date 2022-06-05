@@ -12,7 +12,7 @@ const beneficiaries = (): JSX.Element => {
   const router = useRouter();
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const { data, error } = useSWR<IBeneficiary[]>(
-    `${API_ENDPOINT}beneficiary/`,
+    `${API_ENDPOINT}/beneficiary/`,
     fetcher,
   );
 

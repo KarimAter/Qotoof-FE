@@ -28,7 +28,7 @@ function BenForm(props: Props) {
 
   const submitData = async (ben: IBeneficiary) => {
     if (updatedBeneficiary?.name) {
-      await fetchHelper(`${API_ENDPOINT}beneficiary/`, {
+      await fetchHelper(`${API_ENDPOINT}/beneficiary/`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ function BenForm(props: Props) {
         }),
       });
     } else {
-      await fetchHelper(`${API_ENDPOINT}beneficiary/`, {
+      await fetchHelper(`${API_ENDPOINT}/beneficiary/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

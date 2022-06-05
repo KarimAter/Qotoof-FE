@@ -7,7 +7,7 @@ function useFetcher(endpoint: string, resolver: (a: any) => any[]) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetch(`${API_ENDPOINT}${endpoint}/`);
+      const data = await fetch(`${API_ENDPOINT}/${endpoint}/`);
       const result = await data.json();
       setValue(resolver(result));
     };

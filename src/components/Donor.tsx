@@ -15,7 +15,7 @@ const Donor = (donor: IDonor) => {
     });
   };
   const deleteDonor = async () => {
-    await fetchHelper(`${API_ENDPOINT}donor/`, {
+    await fetchHelper(`${API_ENDPOINT}/donor/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

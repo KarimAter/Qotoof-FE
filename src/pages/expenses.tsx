@@ -4,14 +4,14 @@ import useSWR from 'swr';
 import Button from '../components/Button';
 import Table from '../components/Table';
 import API_ENDPOINT from '../utils/constants';
-import { IDonation, IExpense } from '../utils/interfaces';
+import {  IExpense } from '../utils/interfaces';
 
 type Props = {};
 
 const Expenses = (props: Props): JSX.Element => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const { data, error } = useSWR<IExpense[]>(
-    `${API_ENDPOINT}expense/`,
+    `${API_ENDPOINT}/expense/`,
     fetcher,
   );
   const goToForm = (e?: React.SyntheticEvent) => {

@@ -10,7 +10,7 @@ type Props = {};
 
 const donors = (props: Props): JSX.Element => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data, error } = useSWR<IDonor[]>(`${API_ENDPOINT}donor/`, fetcher);
+  const { data, error } = useSWR<IDonor[]>(`${API_ENDPOINT}/donor/`, fetcher);
   const router = useRouter();
   // let output
   const goToForm = () => {
