@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import API_ENDPOINT from '../utils/constants';
+import fetchHelper from '../utils/fetchHelpers';
 import { IDonor } from '../utils/interfaces';
 import Button from './Button';
 
@@ -10,6 +12,15 @@ const Donor = (donor: IDonor) => {
     router.push({
       pathname: '/donorForm',
       query: { donor: JSON.stringify(donor) },
+    });
+  };
+  const deleteDonor = async () => {
+    await fetchHelper(`${API_ENDPOINT}donor/`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id }),
     });
   };
 
@@ -23,6 +34,7 @@ const Donor = (donor: IDonor) => {
       </h2>
       <div className="my-auto flex">
         <Button text="Edit" handleClick={editDonor} />
+        <Button text="Delete" handleClick={deleteDonor} />
       </div>
     </div>
   );

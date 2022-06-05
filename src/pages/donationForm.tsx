@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useRouter } from 'next/router';
 import API_ENDPOINT from '../utils/constants';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import Select from '../components/Select';
 import useFetcher from '../utils/useFetcher';
 import { IDonation, IDonor } from '../utils/interfaces';
+import fetchHelper from '../utils/fetchHelpers';
 
 type Props = {};
 
@@ -27,6 +29,16 @@ const schema = yup.object().shape({
 function DonationForm(props: Props) {
   const [response, setResponse] = useState<JSX.Element | string>('');
 
+  const router = useRouter();
+  let updatedDonation: IDonation;
+
+  if (router.query.donation) {
+    const updatedDonationO = Array.isArray(router.query.donation)
+      ? router.query.donation[0]
+      : router.query.donation;
+    updatedDonation = JSON.parse(updatedDonationO);
+  }
+
   const {
     register,
     handleSubmit,
@@ -40,19 +52,27 @@ function DonationForm(props: Props) {
   );
 
   const submitData = async (donation: IDonation) => {
-    console.log(donation);
-    try {
-      const res = await fetch(`${API_ENDPOINT}donation/`, {
+    if (updatedDonation) {
+      await fetchHelper(`${API_ENDPOINT}donation/`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: updatedDonation.id,
+          ...donation,
+        }),
+      });
+    } else {
+      await fetchHelper(`${API_ENDPOINT}donation/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(donation),
+        body: JSON.stringify({
+          ...donation,
+        }),
       });
-      const donat = await res.json();
-      setResponse(`${donat.amount} is added successfully`);
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -64,7 +84,8 @@ function DonationForm(props: Props) {
           error={errors.donor?.name}
           options={donorsList}
           control={control}
-          fieldLabel='donor'
+          fieldLabel="donor"
+          value={updatedDonation.donor}
         />
         <Input
           type="number"
@@ -72,6 +93,7 @@ function DonationForm(props: Props) {
           label="amount"
           reg={{ ...register('amount') }}
           error={errors.amount}
+          value={updatedDonation.amount}
         />
         <Input
           type="text"
@@ -79,6 +101,7 @@ function DonationForm(props: Props) {
           label="category"
           reg={{ ...register('category') }}
           error={errors.category}
+          value={updatedDonation.category}
         />
 
         <Button text="Add Donation" type="submit" />

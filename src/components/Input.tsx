@@ -8,7 +8,7 @@ interface IInput {
   name: string;
   type?: 'text' | 'number';
   label: string;
-  value?: string;
+  value?: string | number;
   error: FieldError;
   reg: {
     onChange: ChangeHandler;
