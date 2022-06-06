@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-nested-ternary */
 import { useRouter } from 'next/router';
 import React, { useRef, useState } from 'react';
@@ -11,35 +12,31 @@ interface Props {
 }
 
 function Table({ models }: Props) {
+  const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const columnHeads = Object.keys(models[0]);
   const router = useRouter();
   const { pathname } = router;
-  let selectedRow: number;
-  let checked: boolean = false;
-  const handleCheck = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    rowIndex: number,
-  ) => {
-    selectedRow = rowIndex;
-    checked = !checked;
+  const handleCheck = (rowIndex: number) => {
+    selectedRows.includes(rowIndex)
+      ? setSelectedRows(selectedRows.filter((v) => v !== rowIndex))
+      : setSelectedRows(selectedRows.concat(rowIndex));
   };
 
   const editRow = () => {
-    // console.log(selectedRow, checked);
     const targetPath =
       pathname === '/expenses'
         ? 'expenseForm'
         : pathname === '/donations'
           ? 'donationForm'
           : '';
-    if (checked)
-      router.push(
-        {
-          pathname: targetPath,
-          query: { payload: JSON.stringify(models[selectedRow]) },
-        },
-        '/edit',
-      );
+
+    router.push(
+      {
+        pathname: targetPath,
+        query: { payload: JSON.stringify(models[selectedRows[0]]) },
+      },
+      '/edit',
+    );
   };
   const deleteRow = async () => {
     const targetPath =
@@ -53,13 +50,24 @@ function Table({ models }: Props) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ id: models[selectedRow].id }),
+      body: JSON.stringify({ ids: selectedRows.map((row) => models[row].id) }),
     });
   };
+  // const x = () => rowCount !== 1;
+  // const y = () => rowCount === 0;
   return (
     <>
-      <Button text="Edit" handleClick={editRow} />
-      <Button text="Delete" type="submit" handleClick={deleteRow} />
+      <Button
+        text="Edit"
+        handleClick={editRow}
+        disabled={selectedRows.length !== 1}
+      />
+      <Button
+        text="Delete"
+        type="submit"
+        handleClick={deleteRow}
+        disabled={selectedRows.length === 0}
+      />
       <table className="mx-auto w-full table-fixed text-center  capitalize  dark:text-gray-400">
         <thead className=" bg-indigo-400  text-base  font-extrabold dark:bg-gray-700 dark:text-gray-400">
           <tr>
@@ -67,6 +75,11 @@ function Table({ models }: Props) {
               <input
                 id="checkbox-all-search"
                 type="checkbox"
+                onChange={() =>
+                  selectedRows.length === 0
+                    ? setSelectedRows(Array.from(Array(models.length).keys()))
+                    : setSelectedRows([])
+                }
                 className="h-2 w-2 min-w-fit  rounded border-gray-300
                      bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500
                       dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
@@ -95,10 +108,11 @@ function Table({ models }: Props) {
                 <input
                   id="checkbox-table-search-1"
                   type="checkbox"
+                  onChange={() => handleCheck(rowIndex)}
+                  checked={selectedRows.includes(rowIndex)}
                   className="h-2 w-2 min-w-fit rounded border-gray-300
                      bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500
                       dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
-                  onChange={(e) => handleCheck(e, rowIndex)}
                 />
               </td>
               {Object.values(model).map((v, index) => (
