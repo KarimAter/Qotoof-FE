@@ -41,7 +41,7 @@ const Login = (props: Props) => {
     console.log(data, status);
     if (status !== 403) {
       localStorage.setItem('token', data.token);
-      dispatch(login(user));
+      dispatch(login(data.user));
       router.push({ pathname: '/' });
     }
   };

@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import initialState from '../utils/data';
+import { initialState } from '../utils/data';
 import { IUser } from '../utils/interfaces';
 import { RootState } from './store';
 
@@ -18,16 +18,8 @@ export const authSlice = createSlice({
 });
 export const { login, logout } = authSlice.actions;
 
-export const authSelector = (state: RootState) => {
-  console.log('State', state);
+export const authSelector = (state: RootState) => state.auth.user;
 
-  return state.auth.user;
-};
-
-export const themeSelector = (state: RootState) => {
-  console.log('State', state);
-
-  return state.auth.theme;
-};
+export const themeSelector = (state: RootState) => state.auth.theme;
 
 export default authSlice.reducer;

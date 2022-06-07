@@ -1,9 +1,11 @@
+import { Role } from "./constants";
+
 export interface IUser {
   id: number;
   name: string;
   email?: string;
   password?: string;
-  role: 'ADMIN' | 'GUEST' | 'SUPER' | 'EDITOR';
+  role: Role;
 }
 export interface IDonor {
   id: number;
