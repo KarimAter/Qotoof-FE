@@ -2,7 +2,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
+import { login } from '../redux/authSlice';
+import { AppDispatch } from '../redux/store';
 import API_ENDPOINT from '../utils/constants';
 import fetchHelper from '../utils/fetchHelpers';
 import { IUser } from '../utils/interfaces';
@@ -17,7 +20,6 @@ const logInschema = yup.object().shape({
 
 const Login = (props: Props) => {
   const router = useRouter();
-
   const {
     register,
     handleSubmit,
@@ -25,8 +27,9 @@ const Login = (props: Props) => {
     formState: { errors },
   } = useForm<IUser>({ resolver: yupResolver(logInschema) });
 
+  const dispatch = useDispatch<AppDispatch>();
   const submitData = async (user: IUser) => {
-    const response = await fetchHelper(`${API_ENDPOINT}/user/login`, {
+    const { data, status } = await fetchHelper(`${API_ENDPOINT}/user/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -35,8 +38,12 @@ const Login = (props: Props) => {
         ...user,
       }),
     });
-    localStorage.setItem('token', response.token);
-    router.push({ pathname: '/'});
+    console.log(data, status);
+    if (status !== 403) {
+      localStorage.setItem('token', data.token);
+      dispatch(login(user));
+      router.push({ pathname: '/' });
+    }
   };
 
   return (
