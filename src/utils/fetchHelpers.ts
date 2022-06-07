@@ -6,6 +6,7 @@ const fetchHelper = async (
     const res = await fetch(apiEndpoint, payload);
     const data = await res.json();
     console.log(data);
+    return data;
   } catch (error) {
     console.log(error);
   }

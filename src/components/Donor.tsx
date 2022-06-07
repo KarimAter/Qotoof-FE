@@ -9,10 +9,13 @@ const Donor = (donor: IDonor) => {
   const { id, name, referral } = donor;
   const router = useRouter();
   const editDonor = async () => {
-    router.push({
-      pathname: '/donorForm',
-      query: { donor: JSON.stringify(donor) },
-    });
+    router.push(
+      {
+        pathname: '/donorForm',
+        query: { donor: JSON.stringify(donor) },
+      },
+      '/edit',
+    );
   };
   const deleteDonor = async () => {
     await fetchHelper(`${API_ENDPOINT}/donor/`, {

@@ -4,14 +4,17 @@ import useSWR from 'swr';
 import Button from '../components/Button';
 import Table from '../components/Table';
 import API_ENDPOINT from '../utils/constants';
-import {  IExpense } from '../utils/interfaces';
+import { IExpense } from '../utils/interfaces';
 
 type Props = {};
 
 const Expenses = (props: Props): JSX.Element => {
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  const fetcher = (url: string, token: string) =>
+    fetch(url, { headers: { Authorization: `Bearer ${token}` } }).then((res) =>
+      res.json(),
+    );
   const { data, error } = useSWR<IExpense[]>(
-    `${API_ENDPOINT}/expense/`,
+    [`${API_ENDPOINT}/expense/`, localStorage.getItem('token')],
     fetcher,
   );
   const goToForm = (e?: React.SyntheticEvent) => {

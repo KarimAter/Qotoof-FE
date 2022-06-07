@@ -7,11 +7,7 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import Select from '../components/Select';
 import API_ENDPOINT from '../utils/constants';
-import {
-  IBeneficiary,
-  IExpense,
-  IUser,
-} from '../utils/interfaces';
+import { IBeneficiary, IExpense, IUser } from '../utils/interfaces';
 import useFetcher from '../utils/useFetcher';
 import fetchHelper from '../utils/fetchHelpers';
 
@@ -39,12 +35,10 @@ function ExpenseForm(props: Props) {
 
   const router = useRouter();
   let updatedExpense: IExpense;
-  const {payload} = router.query;
+  const { payload } = router.query;
 
   if (payload) {
-    const updatedExpenseJson = Array.isArray(payload)
-      ? payload[0]
-      : payload;
+    const updatedExpenseJson = Array.isArray(payload) ? payload[0] : payload;
     updatedExpense = JSON.parse(updatedExpenseJson);
   }
   console.log(updatedExpense);
@@ -64,7 +58,7 @@ function ExpenseForm(props: Props) {
     `beneficiary`,
     (arr: IBeneficiary[]): IBeneficiary[] => arr.map((d) => d),
   );
-  console.log(errors)
+  console.log(errors);
   const submitData = async (expense: IExpense) => {
     if (updatedExpense) {
       await fetchHelper(`${API_ENDPOINT}/expense/`, {
@@ -125,7 +119,7 @@ function ExpenseForm(props: Props) {
           value={updatedExpense?.category}
         />
 
-        <Button text="Add Expense" type="submit" />
+        <Button text={updatedExpense ? 'Update' : 'Add'} type="submit" />
       </form>
       <h4>{response}</h4>
     </div>

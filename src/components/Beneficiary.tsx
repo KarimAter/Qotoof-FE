@@ -10,7 +10,7 @@ function Beneficiary(ben: IBeneficiary) {
   const router = useRouter();
 
   const editBeneficiary = async () => {
-    router.push({ pathname: '/benForm', query: { ...ben } });
+    router.push({ pathname: '/benForm', query: { ...ben } }, '/edit');
   };
 
   const deleteBeneficiary = async () => {

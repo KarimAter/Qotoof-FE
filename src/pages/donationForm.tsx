@@ -106,7 +106,7 @@ function DonationForm(props: Props) {
           value={updatedDonation?.category}
         />
 
-        <Button text="Add Donation" type="submit" />
+        <Button text={updatedDonation ? 'Update' : 'Add'} type="submit" />
       </form>
       <h4>{response}</h4>
     </div>
