@@ -7,10 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "lint:fix": "next lint --fix"
+    "lint:fix": "next lint --fix",
+    "analyze": "ANALYZE=true next build",
+    "analyze:server": "BUNDLE_ANALYZE=server next build",
+    "analyze:browser": "BUNDLE_ANALYZE=browser next build"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.8.10",
+    "@next/bundle-analyzer": "^12.1.6",
     "@reduxjs/toolkit": "^1.8.2",
     "@types/react-redux": "^7.1.24",
     "next": "^12.1.6",
