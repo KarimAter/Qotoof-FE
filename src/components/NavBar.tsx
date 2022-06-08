@@ -1,22 +1,29 @@
+/* eslint-disable react/jsx-curly-brace-presence */
 import Link from 'next/link';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { authSelector } from '../redux/authSlice';
+import { themeSelector } from '../redux/themeSlice';
 import { Role } from '../utils/constants';
 import { sideBarData } from '../utils/data';
-import { IUser } from '../utils/interfaces';
 
 type Props = {};
 
 function NavBar() {
   let authLevel = 0;
-  const user = useSelector(authSelector) as IUser;
+  const {user} = useSelector(authSelector);
+  const {theme} = useSelector(themeSelector);
   if (user.role) {
-    authLevel = Object.values(Role).indexOf(user.role.toString());
+    authLevel = Object.values(Role).indexOf(user?.role.toString());
   }
+
   return (
     <aside className="w-64" aria-label="Sidebar">
-      <div className="overflow-y-auto rounded bg-gray-50 py-4 px-3 dark:bg-gray-800">
+      <div
+        className={`overflow-y-auto rounded  py-4 px-3 dark:bg-gray-800 ${
+          theme === 'light' ? `bg-gray-100` : `bg-slate-700`
+        }`}
+      >
         <ul className="space-y-2">
           {sideBarData
             .filter((item) => item.role <= authLevel)

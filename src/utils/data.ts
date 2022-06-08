@@ -1,8 +1,18 @@
 import { Role } from './constants';
+import { IUser } from './interfaces';
+
+const anonymusUser: IUser = {
+  id: -1,
+  name: 'Anonymus',
+  role: Role.GUEST,
+  email: '',
+  password: '',
+};
 
 const initialState = {
-  user: {},
-  theme: '',
+  user: anonymusUser,
+  theme: 'light',
+  token: '',
 };
 
 const sideBarData = [

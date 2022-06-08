@@ -4,7 +4,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
-import { login } from '../redux/authSlice';
+import { login, setToken } from '../redux/authSlice';
 import { AppDispatch } from '../redux/store';
 import API_ENDPOINT from '../utils/constants';
 import fetchHelper from '../utils/fetchHelpers';
@@ -40,7 +40,8 @@ const Login = (props: Props) => {
     });
     console.log(data, status);
     if (status !== 403) {
-      localStorage.setItem('token', data.token);
+      // localStorage.setItem('token', data.token);
+      dispatch(setToken(data.token));
       dispatch(login(data.user));
       router.push({ pathname: '/' });
     }

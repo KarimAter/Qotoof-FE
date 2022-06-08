@@ -6,6 +6,7 @@ import '../../styles/globals.css';
 import store from '../redux/store';
 
 function MyApp({ Component, pageProps }: AppProps) {
+
   return (
     <Provider store={store}>
       <div className="flex h-screen flex-row">

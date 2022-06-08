@@ -1,26 +1,29 @@
 /* eslint-disable no-unused-expressions */
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Signup from '../components/Signup';
 import Login from '../components/Login';
 import Button from '../components/Button';
 import { AppDispatch } from '../redux/store';
-import { logout } from '../redux/authSlice';
+import { authSelector, logout } from '../redux/authSlice';
+import { IUser } from '../utils/interfaces';
 
 type Props = {};
 
 const Signin = () => {
   const [loggedIn, setloggedIn] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
-  if (localStorage.getItem('token') && !loggedIn) setloggedIn(true);
+  const {token} = useSelector(authSelector);
+  //
+
+  if (token !== '' && !loggedIn) setloggedIn(true);
   return loggedIn ? (
     <Button
       text="Signout"
       type="submit"
       handleClick={() => {
-        localStorage.removeItem('token');
         setloggedIn(false);
-        dispatch(logout())
+        dispatch(logout());
       }}
     />
   ) : (

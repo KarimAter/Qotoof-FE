@@ -10,6 +10,7 @@ interface IButton {
 
 function Button(props: IButton) {
   const { text, handleClick, type, disabled } = props;
+
   return (
     <button
       type={type || 'button'}

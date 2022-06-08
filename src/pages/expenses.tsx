@@ -1,20 +1,25 @@
+/* eslint-disable no-shadow */
 import router from 'next/router';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import useSWR from 'swr';
 import Button from '../components/Button';
 import Table from '../components/Table';
+import { authSelector } from '../redux/authSlice';
 import API_ENDPOINT from '../utils/constants';
 import { IExpense } from '../utils/interfaces';
 
 type Props = {};
 
 const Expenses = (props: Props): JSX.Element => {
+  const { token } = useSelector(authSelector);
+
   const fetcher = (url: string, token: string) =>
     fetch(url, { headers: { Authorization: `Bearer ${token}` } }).then((res) =>
       res.json(),
     );
   const { data, error } = useSWR<IExpense[]>(
-    [`${API_ENDPOINT}/expense/`, localStorage.getItem('token')],
+    [`${API_ENDPOINT}/expense/`, token],
     fetcher,
   );
   const goToForm = (e?: React.SyntheticEvent) => {
