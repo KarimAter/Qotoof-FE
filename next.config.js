@@ -5,8 +5,9 @@ const nextConfig = {
   typescript: { tsconfig: "tsconfig.json" },
 };
 
+
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled:true
+  enabled: process.env.ANALYZE === 'true',
 });
 
 module.exports = (phase, nextConfig) => withBundleAnalyzer(nextConfig);
