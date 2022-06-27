@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
@@ -19,6 +19,7 @@ const logInschema = yup.object().shape({
 });
 
 const Login = (props: Props) => {
+  const [authError, setAuthError] = useState('');
   const router = useRouter();
   const {
     register,
@@ -44,6 +45,8 @@ const Login = (props: Props) => {
       dispatch(setToken(data.token));
       dispatch(login(data.user));
       router.push({ pathname: '/' });
+    } else {
+      setAuthError(data.msg);
     }
   };
 
@@ -63,8 +66,8 @@ const Login = (props: Props) => {
           reg={{ ...register('password') }}
           error={errors.password}
         />
-
         <Button text="Log in" type="submit" />
+        {authError && <p>{authError}</p>}
       </form>
     </div>
   );
