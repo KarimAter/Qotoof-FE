@@ -14,12 +14,13 @@ function Home() {
     <div className="flex w-full flex-col p-2">
       <h2>{`Hello ${user.name}`}</h2>
       <Button
-        text={theme === 'light' ? 'Dark Mode' : 'Light Mode'}
         type="button"
         handleClick={() =>
           dispatch(changeTheme(theme === 'light' ? 'dark' : 'light'))
         }
-      />
+      >
+        {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+      </Button>
     </div>
   );
 }

@@ -29,8 +29,8 @@ function Beneficiary(ben: IBeneficiary) {
         {name}
       </h2>
       <div className="my-auto flex">
-        <Button text="Edit" handleClick={editBeneficiary} />
-        <Button text="Delete" handleClick={deleteBeneficiary} />
+        <Button handleClick={editBeneficiary}>Edit</Button>
+        <Button handleClick={deleteBeneficiary}> Delete</Button>
       </div>
     </div>
   );

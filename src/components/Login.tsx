@@ -66,7 +66,7 @@ const Login = (props: Props) => {
           reg={{ ...register('password') }}
           error={errors.password}
         />
-        <Button text="Log in" type="submit" />
+        <Button type="submit">Log in </Button>
         {authError && <p>{authError}</p>}
       </form>
     </div>

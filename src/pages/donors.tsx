@@ -22,11 +22,9 @@ const donors = (props: Props): JSX.Element => {
   if (data) {
     return (
       <div className=" h-full w-full p-4">
-        <Button
-          handleClick={goToForm}
-          text="Create new Donor"
-          type="submit"
-        />
+        <Button handleClick={goToForm} type="submit">
+          Create new Donor
+        </Button>
         {data.map((donor) => (
           <Donor key={donor.id} {...donor} />
         ))}

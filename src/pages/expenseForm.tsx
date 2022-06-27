@@ -119,7 +119,7 @@ function ExpenseForm(props: Props) {
           value={updatedExpense?.category}
         />
 
-        <Button text={updatedExpense ? 'Update' : 'Add'} type="submit" />
+        <Button type="submit"> {updatedExpense ? 'Update' : 'Add'} </Button>
       </form>
       <h4>{response}</h4>
     </div>

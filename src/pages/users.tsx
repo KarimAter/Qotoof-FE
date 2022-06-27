@@ -13,19 +13,21 @@ type Props = {};
 const Signin = () => {
   const [loggedIn, setloggedIn] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
-  const {token} = useSelector(authSelector);
+  const { token } = useSelector(authSelector);
   //
 
   if (token !== '' && !loggedIn) setloggedIn(true);
   return loggedIn ? (
     <Button
-      text="Signout"
+      // text="Signout"
       type="submit"
       handleClick={() => {
         setloggedIn(false);
         dispatch(logout());
       }}
-    />
+    >
+      Signout
+    </Button>
   ) : (
     <div className="flex w-full flex-row justify-evenly justify-items-center">
       <Signup />

@@ -25,11 +25,9 @@ const beneficiaries = (): JSX.Element => {
   if (data) {
     return (
       <div className=" h-full w-full p-4 ">
-        <Button
-          handleClick={goToForm}
-          text="Create new beneficiary"
-          type="submit"
-        />
+        <Button handleClick={goToForm} type="submit">
+          Create new beneficiary{' '}
+        </Button>
         {data.map((beneficiary: IBeneficiary) => (
           <div key={beneficiary.id}>
             <Beneficiary {...beneficiary} />

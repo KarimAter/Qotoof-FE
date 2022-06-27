@@ -84,7 +84,7 @@ function DonorForm() {
           fieldLabel="referral"
           value={updatedDonor?.referral}
         />
-        <Button text={updatedDonor?.name ? 'Update' : 'Add'} type="submit" />
+        <Button type="submit">{updatedDonor?.name ? 'Update' : 'Add'} </Button>
       </form>
       <h4>{response}</h4>
     </div>

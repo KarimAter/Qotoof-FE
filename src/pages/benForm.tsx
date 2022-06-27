@@ -59,10 +59,9 @@ function BenForm(props: Props) {
           reg={{ ...register('name') }}
           error={errors.name}
         />
-        <Button
-          text={updatedBeneficiary.name ? 'Update' : 'Add'}
-          type="submit"
-        />
+        <Button type="submit">
+          {updatedBeneficiary.name ? 'Update' : 'Add'}
+        </Button>
       </form>
       <h4>{response}</h4>
     </div>

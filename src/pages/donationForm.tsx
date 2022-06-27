@@ -33,11 +33,8 @@ function DonationForm(props: Props) {
   let updatedDonation: IDonation;
   const { payload } = router.query;
 
-
   if (payload) {
-    const updatedDonationJson = Array.isArray(payload)
-      ? payload[0]
-      : payload;
+    const updatedDonationJson = Array.isArray(payload) ? payload[0] : payload;
     updatedDonation = JSON.parse(updatedDonationJson);
   }
 
@@ -106,7 +103,7 @@ function DonationForm(props: Props) {
           value={updatedDonation?.category}
         />
 
-        <Button text={updatedDonation ? 'Update' : 'Add'} type="submit" />
+        <Button type="submit">{updatedDonation ? 'Update' : 'Add'} </Button>
       </form>
       <h4>{response}</h4>
     </div>

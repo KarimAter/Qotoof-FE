@@ -57,17 +57,16 @@ function Table({ models }: Props) {
   // const y = () => rowCount === 0;
   return (
     <>
+      <Button handleClick={editRow} disabled={selectedRows.length !== 1}>
+        Edit
+      </Button>
       <Button
-        text="Edit"
-        handleClick={editRow}
-        disabled={selectedRows.length !== 1}
-      />
-      <Button
-        text="Delete"
         type="submit"
         handleClick={deleteRow}
         disabled={selectedRows.length === 0}
-      />
+      >
+        Delete
+      </Button>
       <table className="mx-auto w-full table-fixed text-center  capitalize  dark:text-gray-400">
         <thead className=" bg-indigo-400  text-base  font-extrabold dark:bg-gray-700 dark:text-gray-400">
           <tr>

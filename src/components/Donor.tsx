@@ -36,8 +36,8 @@ const Donor = (donor: IDonor) => {
         {referral.name}
       </h2>
       <div className="my-auto flex">
-        <Button text="Edit" handleClick={editDonor} />
-        <Button text="Delete" handleClick={deleteDonor} />
+        <Button handleClick={editDonor}> Edit </Button>
+        <Button handleClick={deleteDonor}> Delete </Button>
       </div>
     </div>
   );

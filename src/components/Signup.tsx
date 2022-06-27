@@ -47,7 +47,7 @@ const Signup = (props: Props) => {
     // }
   };
   return (
-    <div className=' '>
+    <div className=" ">
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit(submitData)}>
         <Input
@@ -74,7 +74,7 @@ const Signup = (props: Props) => {
           reg={{ ...register('role') }}
           error={errors.role}
         />
-        <Button text="Sign Up" type="submit" />
+        <Button type="submit">Sign up </Button>
       </form>
     </div>
   );
