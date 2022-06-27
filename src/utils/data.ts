@@ -22,7 +22,7 @@ const sideBarData = [
   { name: 'Donors', href: '/donors', role: Role.ADMIN },
   { name: 'Donations', href: '/donations', role: Role.SUPER },
   { name: 'Expenses', href: '/expenses', role: Role.ADMIN },
-  { name: 'Users', href: '/users', role: Role.GUEST },
+  { name: 'Users', href: '/users', role: Role.SUPER },
 ];
 
 export { initialState, sideBarData };
