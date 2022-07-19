@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/router';
 import React from 'react';
-import { useSelector } from 'react-redux/es/hooks/useSelector';
+import { useSelector } from 'react-redux';
 import useSWR from 'swr';
 import Button from '../components/Button';
 import Donor from '../components/Donor';
@@ -31,6 +31,7 @@ const donors = (props: Props): JSX.Element => {
 
   if (error) return <h4>An error has occurred</h4>;
   if (!data) return <h4> Loading </h4>;
+  console.log(data);
   if (data) {
     return (
       <div className=" h-full w-full p-4">
