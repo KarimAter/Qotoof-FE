@@ -65,7 +65,7 @@ const NavBar = (props: Props) => {
           {loggedIn ? (
             <Button
               // text="Signout"
-              type="submit"
+              type="button"
               handleClick={() => {
                 setloggedIn(false);
                 dispatch(logout());

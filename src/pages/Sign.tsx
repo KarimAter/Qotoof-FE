@@ -14,7 +14,7 @@ const Sign = () => {
   const [loggedIn, setloggedIn] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const { token } = useSelector(authSelector);
-  //
+  // TODO: refactor this
 
   if (token !== '' && !loggedIn) setloggedIn(true);
   return loggedIn ? (
