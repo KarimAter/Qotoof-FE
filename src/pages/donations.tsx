@@ -4,12 +4,13 @@ import useSWR from 'swr';
 import Button from '../components/Button';
 import Table from '../components/Table';
 import API_ENDPOINT from '../utils/constants';
+import { fetcher } from '../utils/fetchHelpers';
 import { IDonation } from '../utils/interfaces';
 
 type Props = {};
 
 const Donations = (props: Props): JSX.Element => {
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  // const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const { data, error } = useSWR<IDonation[]>(
     `${API_ENDPOINT}/donation/`,
     fetcher,
@@ -18,7 +19,11 @@ const Donations = (props: Props): JSX.Element => {
     router.push('/donationForm');
   };
 
-  if (error) return <h4>An error has occurred</h4>;
+  if (error) {
+    console.log(error.message);
+    router.push({ pathname: '/Sign' });
+    return <h4>{error.message}</h4>;
+  }
   if (!data) return <h4> Loading </h4>;
   if (data) {
     return (

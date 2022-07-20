@@ -1,3 +1,4 @@
+/* eslint-disable import/named */
 /* eslint-disable no-shadow */
 import router from 'next/router';
 import React from 'react';
@@ -7,6 +8,7 @@ import Button from '../components/Button';
 import Table from '../components/Table';
 import { authSelector } from '../redux/authSlice';
 import API_ENDPOINT from '../utils/constants';
+import { fetcher } from '../utils/fetchHelpers';
 import { IExpense } from '../utils/interfaces';
 
 type Props = {};
@@ -14,19 +16,19 @@ type Props = {};
 const Expenses = (props: Props): JSX.Element => {
   const { token } = useSelector(authSelector);
 
-  const fetcher = (url: string, token: string) =>
-    fetch(url, { headers: { Authorization: `Bearer ${token}` } }).then((res) =>
-      res.json(),
-    );
-  const { data, error } = useSWR<IExpense[]>(
+  const { data, error } = useSWR<IExpense[], Error>(
     [`${API_ENDPOINT}/expense/`, token],
     fetcher,
   );
+  console.log(data);
   const goToForm = (e?: React.SyntheticEvent) => {
     router.push('/expenseForm');
   };
-
-  if (error) return <h4>An error has occurred</h4>;
+  if (error) {
+    console.log(error.message);
+    router.push({ pathname: '/Sign' });
+    return <h4>{error.message}</h4>;
+  }
   if (!data) return <h4> Loading </h4>;
   if (data) {
     return (

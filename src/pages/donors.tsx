@@ -8,6 +8,7 @@ import Button from '../components/Button';
 import Donor from '../components/Donor';
 import { authSelector } from '../redux/authSlice';
 import API_ENDPOINT from '../utils/constants';
+import { fetcher } from '../utils/fetchHelpers';
 import { IDonor } from '../utils/interfaces';
 
 type Props = {};
@@ -15,10 +16,10 @@ type Props = {};
 const donors = (props: Props): JSX.Element => {
   const { token } = useSelector(authSelector);
 
-  const fetcher = (url: string, token: string) =>
-    fetch(url, { headers: { Authorization: `Bearer ${token}` } }).then((res) =>
-      res.json(),
-    );
+  // const fetcher = (url: string, token: string) =>
+  //   fetch(url, { headers: { Authorization: `Bearer ${token}` } }).then((res) =>
+  //     res.json(),
+  //   );
   const { data, error } = useSWR<IDonor[]>(
     [`${API_ENDPOINT}/donor/`, token],
     fetcher,
@@ -29,7 +30,11 @@ const donors = (props: Props): JSX.Element => {
     router.push('/donorForm');
   };
 
-  if (error) return <h4>An error has occurred</h4>;
+  if (error) {
+    console.log(error.message);
+    router.push({ pathname: '/Sign' });
+    return <h4>{error.message}</h4>;
+  }
   if (!data) return <h4> Loading </h4>;
   console.log(data);
   if (data) {

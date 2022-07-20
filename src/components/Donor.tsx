@@ -1,11 +1,15 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { authSelector } from '../redux/authSlice';
 import API_ENDPOINT from '../utils/constants';
-import fetchHelper from '../utils/fetchHelpers';
+import { fetchHelper } from '../utils/fetchHelpers';
 import { IDonor } from '../utils/interfaces';
 import Button from './Button';
 
 const Donor = (donor: IDonor) => {
+  const { token } = useSelector(authSelector);
+
   const { id, name, referral } = donor;
   const router = useRouter();
   const editDonor = async () => {
@@ -20,9 +24,7 @@ const Donor = (donor: IDonor) => {
   const deleteDonor = async () => {
     await fetchHelper(`${API_ENDPOINT}/donor/`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      token,
       body: JSON.stringify({ id }),
     });
   };

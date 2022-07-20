@@ -2,8 +2,10 @@
 /* eslint-disable no-nested-ternary */
 import { useRouter } from 'next/router';
 import React, { useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { authSelector } from '../redux/authSlice';
 import API_ENDPOINT from '../utils/constants';
-import fetchHelper from '../utils/fetchHelpers';
+import { fetchHelper } from '../utils/fetchHelpers';
 import { IBeneficiary, IDonation, IExpense } from '../utils/interfaces';
 import Button from './Button';
 
@@ -12,6 +14,7 @@ interface Props {
 }
 
 function Table({ models }: Props) {
+  const { token } = useSelector(authSelector);
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const columnHeads = Object.keys(models[0]);
   const router = useRouter();
@@ -47,9 +50,7 @@ function Table({ models }: Props) {
           : '';
     await fetchHelper(`${API_ENDPOINT}/${targetPath}`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      token,
       body: JSON.stringify({ ids: selectedRows.map((row) => models[row].id) }),
     });
   };

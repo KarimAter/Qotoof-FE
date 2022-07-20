@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 import API_ENDPOINT from '../utils/constants';
 import Button from '../components/Button';
 import Input from '../components/Input';
@@ -10,6 +11,7 @@ import Select from '../components/Select';
 import useFetcher from '../utils/useFetcher';
 import { IDonation, IDonor } from '../utils/interfaces';
 import fetchHelper from '../utils/fetchHelpers';
+import { authSelector } from '../redux/authSlice';
 
 type Props = {};
 
@@ -28,6 +30,8 @@ const schema = yup.object().shape({
 
 function DonationForm(props: Props) {
   const [response, setResponse] = useState<JSX.Element | string>('');
+  const { token } = useSelector(authSelector);
+
 
   const router = useRouter();
   let updatedDonation: IDonation;
@@ -54,9 +58,7 @@ function DonationForm(props: Props) {
     if (updatedDonation) {
       await fetchHelper(`${API_ENDPOINT}/donation/`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        token,
         body: JSON.stringify({
           id: updatedDonation.id,
           ...donation,
@@ -65,9 +67,7 @@ function DonationForm(props: Props) {
     } else {
       await fetchHelper(`${API_ENDPOINT}/donation/`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        token,
         body: JSON.stringify({
           ...donation,
         }),

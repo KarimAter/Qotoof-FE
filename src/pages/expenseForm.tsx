@@ -3,13 +3,15 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useSelector } from 'react-redux';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import Select from '../components/Select';
 import API_ENDPOINT from '../utils/constants';
 import { IBeneficiary, IExpense, IUser } from '../utils/interfaces';
 import useFetcher from '../utils/useFetcher';
-import fetchHelper from '../utils/fetchHelpers';
+import {fetchHelper} from '../utils/fetchHelpers';
+import { authSelector } from '../redux/authSlice';
 
 const schema = yup.object().shape({
   beneficiary: yup.object().shape({
@@ -31,6 +33,8 @@ const schema = yup.object().shape({
 type Props = {};
 
 function ExpenseForm(props: Props) {
+  const { token } = useSelector(authSelector);
+
   const [response, setResponse] = useState<JSX.Element | string>('');
 
   const router = useRouter();
@@ -63,9 +67,7 @@ function ExpenseForm(props: Props) {
     if (updatedExpense) {
       await fetchHelper(`${API_ENDPOINT}/expense/`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        token,
         body: JSON.stringify({
           id: updatedExpense.id,
           ...expense,
@@ -74,9 +76,7 @@ function ExpenseForm(props: Props) {
     } else {
       await fetchHelper(`${API_ENDPOINT}/expense/`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        token,
         body: JSON.stringify({
           ...expense,
         }),

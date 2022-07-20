@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import API_ENDPOINT from '../utils/constants';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import { IBeneficiary, IDonor, IUser } from '../utils/interfaces';
-import fetchHelper from '../utils/fetchHelpers';
+import { fetchHelper } from '../utils/fetchHelpers';
 import Select from '../components/Select';
 import useFetcher from '../utils/useFetcher';
+import { authSelector } from '../redux/authSlice';
 
 const schema = yup.object().shape({
   name: yup.string().required('donor name is required'),
@@ -20,6 +22,8 @@ const schema = yup.object().shape({
 });
 
 function DonorForm() {
+  const { token } = useSelector(authSelector);
+
   const router = useRouter();
   let updatedDonor: IDonor;
   if (router.query.donor) {
@@ -44,12 +48,11 @@ function DonorForm() {
   );
 
   const submitData = async (donor: IDonor) => {
+    console.log(token);
     if (updatedDonor) {
       await fetchHelper(`${API_ENDPOINT}/donor/`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        token,
         body: JSON.stringify({
           id: updatedDonor.id,
           name: donor.name,
@@ -59,9 +62,7 @@ function DonorForm() {
     } else {
       await fetchHelper(`${API_ENDPOINT}/donor/`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        token,
         body: JSON.stringify(donor),
       });
     }

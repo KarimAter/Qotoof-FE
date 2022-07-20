@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import { login, setToken } from '../redux/authSlice';
 import { AppDispatch } from '../redux/store';
 import API_ENDPOINT from '../utils/constants';
-import fetchHelper from '../utils/fetchHelpers';
+import { fetchHelper } from '../utils/fetchHelpers';
 import { IUser } from '../utils/interfaces';
 import Button from './Button';
 import Input from './Input';
@@ -32,21 +32,19 @@ const Login = (props: Props) => {
   const submitData = async (user: IUser) => {
     const { data, status } = await fetchHelper(`${API_ENDPOINT}/user/login`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      token: '',
       body: JSON.stringify({
         ...user,
       }),
     });
     console.log(data, status);
-    if (status !== 403) {
+    if (status === 200) {
       // localStorage.setItem('token', data.token);
       dispatch(setToken(data.token));
       dispatch(login(data.user));
       router.push({ pathname: '/' });
     } else {
-      setAuthError(data.msg);
+      setAuthError(data ? data.msg : 'no connection');
     }
   };
 
