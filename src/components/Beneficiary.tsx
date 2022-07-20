@@ -1,13 +1,17 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { authSelector } from '../redux/authSlice';
 import API_ENDPOINT from '../utils/constants';
-import fetchHelper from '../utils/fetchHelpers';
+import { fetchHelper } from '../utils/fetchHelpers';
 import { IBeneficiary } from '../utils/interfaces';
 import Button from './Button';
 
 function Beneficiary(ben: IBeneficiary) {
   const { id, name } = ben;
   const router = useRouter();
+  const { token } = useSelector(authSelector);
+
 
   const editBeneficiary = async () => {
     router.push({ pathname: '/benForm', query: { ...ben } }, '/edit');
@@ -16,9 +20,7 @@ function Beneficiary(ben: IBeneficiary) {
   const deleteBeneficiary = async () => {
     await fetchHelper(`${API_ENDPOINT}/beneficiary/`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      token,
       body: JSON.stringify({ id }),
     });
   };

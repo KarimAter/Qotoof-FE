@@ -1,8 +1,10 @@
 import router from 'next/router';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import useSWR from 'swr';
 import Button from '../components/Button';
 import Table from '../components/Table';
+import { authSelector } from '../redux/authSlice';
 import API_ENDPOINT from '../utils/constants';
 import { fetcher } from '../utils/fetchHelpers';
 import { IDonation } from '../utils/interfaces';
@@ -10,9 +12,9 @@ import { IDonation } from '../utils/interfaces';
 type Props = {};
 
 const Donations = (props: Props): JSX.Element => {
-  // const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  const { token } = useSelector(authSelector);
   const { data, error } = useSWR<IDonation[]>(
-    `${API_ENDPOINT}/donation/`,
+    [`${API_ENDPOINT}/donation/`, token],
     fetcher,
   );
   const goToForm = (e?: React.SyntheticEvent) => {

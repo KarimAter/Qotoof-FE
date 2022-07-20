@@ -2,22 +2,32 @@
 import React from 'react';
 import router from 'next/router';
 import useSWR from 'swr';
-import Button from '../components/Button';
+import { useSelector } from 'react-redux';
 import { IUser } from '../utils/interfaces';
-
 import Table from '../components/Table';
+import Button from '../components/Button';
 import API_ENDPOINT from '../utils/constants';
+import { authSelector } from '../redux/authSlice';
+import { fetcher } from '../utils/fetchHelpers';
 
 type Props = {};
 
 const Users = () => {
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data, error } = useSWR<IUser[]>(`${API_ENDPOINT}/user/`, fetcher);
+  const { token } = useSelector(authSelector);
+
+  const { data, error } = useSWR<IUser[]>(
+    [`${API_ENDPOINT}/user/`, token],
+    fetcher,
+  );
   const goToForm = (e?: React.SyntheticEvent) => {
     router.push('/donationForm');
   };
 
-  if (error) return <h4>An error has occurred</h4>;
+  if (error) {
+    console.log(error.message);
+    router.push({ pathname: '/Sign' });
+    return <h4>{error.message}</h4>;
+  }
   if (!data) return <h4> Loading </h4>;
   if (data) {
     return (
