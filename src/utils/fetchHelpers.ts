@@ -23,8 +23,10 @@ export const fetchHelper = async (
   }
 };
 
-export const fetcher = async (url: string) => {
-  const res = await fetch(url);
+export const fetcher = async (url: string, token: string) => {
+  const res = await fetch(url, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
   if (!res.ok) {
     const error = new Error();
     const errMsg = await res.json();
