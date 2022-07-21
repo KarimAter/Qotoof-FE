@@ -9,31 +9,37 @@ import { authSelector, logout } from '../redux/authSlice';
 import { IUser } from '../utils/interfaces';
 
 type Props = {};
+const Sign = () => (
+  <div className="flex w-full flex-row justify-evenly justify-items-center">
+    <Signup />
+    <Login />
+  </div>
+);
 
-const Sign = () => {
-  const [loggedIn, setloggedIn] = useState(false);
-  const dispatch = useDispatch<AppDispatch>();
-  const { token } = useSelector(authSelector);
-  // TODO: refactor this
+// const Sign = () => {
+//   const [loggedIn, setloggedIn] = useState(false);
+//   const dispatch = useDispatch<AppDispatch>();
+//   const { token } = useSelector(authSelector);
+//   // TODO: refactor this
 
-  if (token !== '' && !loggedIn) setloggedIn(true);
-  return loggedIn ? (
-    <Button
-      // text="Signout"
-      type="submit"
-      handleClick={() => {
-        setloggedIn(false);
-        dispatch(logout());
-      }}
-    >
-      Signout
-    </Button>
-  ) : (
-    <div className="flex w-full flex-row justify-evenly justify-items-center">
-      <Signup />
-      <Login />
-    </div>
-  );
-};
+//   if (token !== '' && !loggedIn) setloggedIn(true);
+//   return loggedIn ? (
+//     <Button
+//       // text="Signout"
+//       type="submit"
+//       handleClick={() => {
+//         setloggedIn(false);
+//         dispatch(logout());
+//       }}
+//     >
+//       Signout
+//     </Button>
+//   ) : (
+//     <div className="flex w-full flex-row justify-evenly justify-items-center">
+//       <Signup />
+//       <Login />
+//     </div>
+//   );
+// };
 
 export default Sign;
