@@ -34,6 +34,30 @@ export const DonationCategory: SelectOption[] = [
   { name: 'Treatment' },
   { name: 'Projects' },
   { name: 'Other' },
+
+];
+export const ExpenseCategory: SelectOption[] = [
+  { name: 'Medication' },
+  { name: 'Treatment' },
+  { name: 'Medical Aid' },
+  { name: 'Marriage' },
+  { name: 'Projects' },
+  { name: 'Meat' },
+  { name: 'Adahy' },
+  { name: 'Bags' },
+  { name: 'Chicken' },
+  { name: 'Transportation' },
+  { name: 'Housing Project' },
+  { name: 'Loans Settling' },
+  { name: 'Meals' },
+  { name: 'Mosque' },
+  { name: 'WaterPipes' },
+  { name: 'Zakat Fitr' },
+  { name: 'Temporary Aid' },
+  { name: 'Monthly Aid' },
+  { name: 'Treatment' },
+  { name: 'Projects' },
+  { name: 'Other' },
 ];
 
 export default API_ENDPOINT;

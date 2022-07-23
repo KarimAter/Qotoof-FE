@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import Select from '../components/Select';
-import API_ENDPOINT from '../utils/constants';
+import API_ENDPOINT, { ExpenseCategory } from '../utils/constants';
 import { IBeneficiary, IExpense, IUser } from '../utils/interfaces';
 import useFetcher from '../utils/useFetcher';
 import {fetchHelper} from '../utils/fetchHelpers';
@@ -93,14 +93,14 @@ function ExpenseForm(props: Props) {
           options={benList}
           control={control}
           fieldLabel="beneficiary"
-          value={updatedExpense?.beneficiary}
+          valuee={updatedExpense?.beneficiary}
         />
         <Select
           error={errors.user?.name}
           options={usersList}
           control={control}
           fieldLabel="user"
-          value={updatedExpense?.user}
+          valuee={updatedExpense?.user}
         />
         <Input
           type="number"
@@ -110,13 +110,20 @@ function ExpenseForm(props: Props) {
           error={errors.amount}
           value={updatedExpense?.amount}
         />
-        <Input
+        {/* <Input
           type="text"
           name="category"
           label="category"
           reg={{ ...register('category') }}
           error={errors.category}
           value={updatedExpense?.category}
+        /> */}
+        <Select
+          error={errors.category}
+          options={ExpenseCategory}
+          control={control}
+          fieldLabel="category"
+          valuee={{ name: updatedExpense?.category }}
         />
 
         <Button type="submit"> {updatedExpense ? 'Update' : 'Add'} </Button>
