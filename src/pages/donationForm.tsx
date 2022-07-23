@@ -4,13 +4,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
-import API_ENDPOINT from '../utils/constants';
+import API_ENDPOINT, { DonationCategory } from '../utils/constants';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import Select from '../components/Select';
 import useFetcher from '../utils/useFetcher';
 import { IDonation, IDonor } from '../utils/interfaces';
-import fetchHelper from '../utils/fetchHelpers';
+import { fetchHelper } from '../utils/fetchHelpers';
 import { authSelector } from '../redux/authSlice';
 
 type Props = {};
@@ -25,13 +25,12 @@ const schema = yup.object().shape({
     .typeError('Amount has to be a number')
     .required('donation amount is required')
     .min(1),
-  category: yup.string().required('category is required').min(0),
+  category: yup.string(),
 });
 
 function DonationForm(props: Props) {
   const [response, setResponse] = useState<JSX.Element | string>('');
   const { token } = useSelector(authSelector);
-
 
   const router = useRouter();
   let updatedDonation: IDonation;
@@ -40,6 +39,7 @@ function DonationForm(props: Props) {
   if (payload) {
     const updatedDonationJson = Array.isArray(payload) ? payload[0] : payload;
     updatedDonation = JSON.parse(updatedDonationJson);
+    console.log(updatedDonation);
   }
 
   const {
@@ -55,6 +55,7 @@ function DonationForm(props: Props) {
   );
 
   const submitData = async (donation: IDonation) => {
+    console.log(donation);
     if (updatedDonation) {
       await fetchHelper(`${API_ENDPOINT}/donation/`, {
         method: 'PUT',
@@ -84,7 +85,7 @@ function DonationForm(props: Props) {
           options={donorsList}
           control={control}
           fieldLabel="donor"
-          value={updatedDonation?.donor}
+          valuee={updatedDonation?.donor}
         />
         <Input
           type="number"
@@ -94,15 +95,13 @@ function DonationForm(props: Props) {
           error={errors.amount}
           value={updatedDonation?.amount}
         />
-        <Input
-          type="text"
-          name="category"
-          label="category"
-          reg={{ ...register('category') }}
+        <Select
           error={errors.category}
-          value={updatedDonation?.category}
+          options={DonationCategory}
+          control={control}
+          fieldLabel="category"
+          valuee={{ name: updatedDonation?.category }}
         />
-
         <Button type="submit">{updatedDonation ? 'Update' : 'Add'} </Button>
       </form>
       <h4>{response}</h4>
