@@ -7,10 +7,13 @@ import { useSelector } from 'react-redux';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import Select from '../components/Select';
-import API_ENDPOINT, { ExpenseCategory } from '../utils/constants';
+import API_ENDPOINT, {
+  DonationCategory,
+  ExpenseCategory,
+} from '../utils/constants';
 import { IBeneficiary, IExpense, IUser } from '../utils/interfaces';
 import useFetcher from '../utils/useFetcher';
-import {fetchHelper} from '../utils/fetchHelpers';
+import { fetchHelper } from '../utils/fetchHelpers';
 import { authSelector } from '../redux/authSlice';
 
 const schema = yup.object().shape({
@@ -27,7 +30,8 @@ const schema = yup.object().shape({
     .typeError('Amount has to be a number')
     .required('donation amount is required')
     .min(1),
-  category: yup.string().required('category is required').min(0),
+  incategory: yup.string().required('incategory is required').min(0),
+  outcategory: yup.string().required('outcategory is required').min(0),
 });
 
 type Props = {};
@@ -110,20 +114,19 @@ function ExpenseForm(props: Props) {
           error={errors.amount}
           value={updatedExpense?.amount}
         />
-        {/* <Input
-          type="text"
-          name="category"
-          label="category"
-          reg={{ ...register('category') }}
-          error={errors.category}
-          value={updatedExpense?.category}
-        /> */}
         <Select
-          error={errors.category}
+          error={errors.incategory}
+          options={DonationCategory}
+          control={control}
+          fieldLabel="incategory"
+          valuee={{ name: updatedExpense?.incategory }}
+        />
+        <Select
+          error={errors.outcategory}
           options={ExpenseCategory}
           control={control}
-          fieldLabel="category"
-          valuee={{ name: updatedExpense?.category }}
+          fieldLabel="outcategory"
+          valuee={{ name: updatedExpense?.outcategory }}
         />
 
         <Button type="submit"> {updatedExpense ? 'Update' : 'Add'} </Button>

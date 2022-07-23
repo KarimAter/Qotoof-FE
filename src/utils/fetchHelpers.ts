@@ -2,7 +2,7 @@
 
 export const fetchHelper = async (
   apiEndpoint: string,
-  payload: { method: string; token: string; body?: any },
+  payload: { method: string; token?: string; body?: any },
 ) => {
   // const router = useRouter();
   try {

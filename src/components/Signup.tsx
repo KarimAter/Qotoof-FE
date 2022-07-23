@@ -2,11 +2,12 @@ import React from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
-import API_ENDPOINT from '../utils/constants';
-import fetchHelper from '../utils/fetchHelpers';
+import API_ENDPOINT, { Role, SelectOption } from '../utils/constants';
+import { fetchHelper } from '../utils/fetchHelpers';
 import { IUser } from '../utils/interfaces';
 import Button from './Button';
 import Input from './Input';
+import Select from './Select';
 
 type Props = {};
 
@@ -23,28 +24,22 @@ const Signup = (props: Props) => {
     handleSubmit,
     watch,
     formState: { errors },
+    control,
   } = useForm<IUser>({ resolver: yupResolver(signUpschema) });
+
+  const ops: SelectOption[] = [];
+  Object.keys(Role)
+    .filter((key) => key.match(/[A-Z]/))
+    .map((key) => ops.push({ name: key }));
 
   const submitData = async (user: IUser) => {
     // if (updatedBeneficiary?.name) {
     await fetchHelper(`${API_ENDPOINT}/user/`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify({
         ...user,
       }),
     });
-    // } else {
-    //   await fetchHelper(`${API_ENDPOINT}/beneficiary/`, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ beneficiaryName: ben.name }),
-    //   });
-    // }
   };
   return (
     <div className=" ">
@@ -68,11 +63,12 @@ const Signup = (props: Props) => {
           reg={{ ...register('password') }}
           error={errors.password}
         />
-        <Input
-          name="role"
-          label="Role"
-          reg={{ ...register('role') }}
+        <Select
           error={errors.role}
+          options={ops}
+          control={control}
+          fieldLabel="role"
+          // valuee={{ name: upda?.category }}
         />
         <Button type="submit">Sign up </Button>
       </form>

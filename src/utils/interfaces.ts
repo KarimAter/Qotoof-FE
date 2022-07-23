@@ -31,7 +31,8 @@ export interface IExpense {
   id: number;
   date: string;
   amount: number;
-  category: string;
+  incategory: string;
+  outcategory: string;
   status: string;
   paymentType: string;
   comment: string;
