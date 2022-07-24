@@ -15,10 +15,10 @@ type Props = {};
 const Users = () => {
   const { token } = useSelector(authSelector);
 
-  const { data, error } = useSWR<IUser[]>(
-    [`${API_ENDPOINT}/user/`, token],
-    fetcher,
-  );
+  const { data, error, mutate } = useSWR<IUser[]>([
+    `${API_ENDPOINT}/user/`,
+    token,
+  ]);
   const goToForm = (e?: React.SyntheticEvent) => {
     router.push('/donationForm');
   };
@@ -62,7 +62,7 @@ const Users = () => {
             />
           </div>
         </div>
-        {data.length > 0 && <Table models={data} />}
+        {data.length > 0 && <Table models={data} mut={mutate} />}
       </div>
     );
   }

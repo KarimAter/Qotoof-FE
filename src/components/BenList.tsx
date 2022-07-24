@@ -8,7 +8,6 @@ const BenList = (): JSX.Element => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const { data, error } = useSWR<IBeneficiary[]>(
     `${API_ENDPOINT}/beneficiary/`,
-    fetcher,
   );
 
   if (error) return <h4>An error has occurred</h4>;

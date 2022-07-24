@@ -17,7 +17,6 @@ const beneficiaries = (): JSX.Element => {
   const router = useRouter();
   const { data, error } = useSWR<IBeneficiary[]>(
     [`${API_ENDPOINT}/beneficiary/`, token],
-    fetcher,
   );
 
   const goToForm = () => {

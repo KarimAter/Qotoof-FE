@@ -1,10 +1,12 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { Provider } from 'react-redux';
+import { SWRConfig } from 'swr';
 import '../../styles/globals.css';
 import store from '../redux/store';
 import SideBar from '../components/SideBar';
 import NavBar from '../components/NavBar';
+import { fetcher } from '../utils/fetchHelpers';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -18,7 +20,15 @@ function MyApp({ Component, pageProps }: AppProps) {
         <NavBar />
         <div className="flex h-screen flex-row">
           <SideBar />
-          <Component {...pageProps} />
+          <SWRConfig
+            value={{
+              fetcher,
+              refreshInterval: 20000,
+              shouldRetryOnError: false,
+            }}
+          >
+            <Component {...pageProps} />
+          </SWRConfig>
         </div>
       </div>
     </Provider>

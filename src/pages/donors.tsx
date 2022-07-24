@@ -17,7 +17,7 @@ const donors = (props: Props): JSX.Element => {
   const { token } = useSelector(authSelector);
   const { data, error } = useSWR<IDonor[]>(
     [`${API_ENDPOINT}/donor/`, token],
-    fetcher,
+   
   );
   const router = useRouter();
   // let output

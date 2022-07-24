@@ -18,7 +18,6 @@ const Expenses = (props: Props): JSX.Element => {
 
   const { data, error, mutate } = useSWR<IExpense[], Error>(
     [`${API_ENDPOINT}/expense/`, token],
-    fetcher,
   );
   console.log(data);
   const goToForm = (e?: React.SyntheticEvent) => {

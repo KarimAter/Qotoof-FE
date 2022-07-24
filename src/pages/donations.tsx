@@ -14,8 +14,7 @@ type Props = {};
 const Donations = (props: Props): JSX.Element => {
   const { token } = useSelector(authSelector);
   const { data, error,mutate } = useSWR<IDonation[]>(
-    [`${API_ENDPOINT}/donation/`, token],
-    fetcher,
+    [`${API_ENDPOINT}/donations/`, token],
   );
   const goToForm = (e?: React.SyntheticEvent) => {
     router.push('/donationForm');

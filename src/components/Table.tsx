@@ -7,12 +7,12 @@ import { KeyedMutator } from 'swr';
 import { authSelector } from '../redux/authSlice';
 import API_ENDPOINT from '../utils/constants';
 import { fetchHelper } from '../utils/fetchHelpers';
-import { IBeneficiary, IDonation, IExpense } from '../utils/interfaces';
+import { IBeneficiary, IDonation, IDonor, IExpense, IUser } from '../utils/interfaces';
 import Button from './Button';
 
 interface Props {
   models: (IDonation | IBeneficiary | IExpense)[];
-  mut: KeyedMutator<IDonation[] | IExpense[]>;
+  mut: KeyedMutator<IDonation[] | IExpense[] | IDonor[] | IUser[]>;
 }
 
 function Table({ models, mut }: Props) {
