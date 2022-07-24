@@ -16,7 +16,7 @@ type Props = {};
 const Expenses = (props: Props): JSX.Element => {
   const { token } = useSelector(authSelector);
 
-  const { data, error } = useSWR<IExpense[], Error>(
+  const { data, error, mutate } = useSWR<IExpense[], Error>(
     [`${API_ENDPOINT}/expense/`, token],
     fetcher,
   );
@@ -63,7 +63,7 @@ const Expenses = (props: Props): JSX.Element => {
             />
           </div>
         </div>
-        {data.length > 0 && <Table models={data} />}
+        {data.length > 0 && <Table models={data} mut={mutate} />}
       </div>
     );
   }

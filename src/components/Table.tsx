@@ -3,6 +3,7 @@
 import { useRouter } from 'next/router';
 import React, { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { KeyedMutator } from 'swr';
 import { authSelector } from '../redux/authSlice';
 import API_ENDPOINT from '../utils/constants';
 import { fetchHelper } from '../utils/fetchHelpers';
@@ -11,9 +12,10 @@ import Button from './Button';
 
 interface Props {
   models: (IDonation | IBeneficiary | IExpense)[];
+  mut: KeyedMutator<IDonation[] | IExpense[]>;
 }
 
-function Table({ models }: Props) {
+function Table({ models, mut }: Props) {
   const { token } = useSelector(authSelector);
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const columnHeads = Object.keys(models[0]);
@@ -53,6 +55,7 @@ function Table({ models }: Props) {
       token,
       body: JSON.stringify({ ids: selectedRows.map((row) => models[row].id) }),
     });
+    mut();
   };
   // const x = () => rowCount !== 1;
   // const y = () => rowCount === 0;
