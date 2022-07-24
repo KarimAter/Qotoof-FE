@@ -25,8 +25,10 @@ const Users = () => {
 
   if (error) {
     console.log(error.message);
-    router.push({ pathname: '/Sign' });
-    return <h4>{error.message}</h4>;
+    if (error.message === 'Not authorized')
+      return <h4>You are not authorized to see these data</h4>;
+    if (error.message.includes('jwt')) router.push({ pathname: '/Sign' });
+    else return <h4>{error.message}</h4>;
   }
   if (!data) return <h4> Loading </h4>;
   if (data) {

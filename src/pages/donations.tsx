@@ -13,9 +13,10 @@ type Props = {};
 
 const Donations = (props: Props): JSX.Element => {
   const { token } = useSelector(authSelector);
-  const { data, error,mutate } = useSWR<IDonation[]>(
-    [`${API_ENDPOINT}/donations/`, token],
-  );
+  const { data, error, mutate } = useSWR<IDonation[]>([
+    `${API_ENDPOINT}/donation/`,
+    token,
+  ]);
   const goToForm = (e?: React.SyntheticEvent) => {
     router.push('/donationForm');
   };
@@ -24,7 +25,8 @@ const Donations = (props: Props): JSX.Element => {
     console.log(error.message);
     if (error.message === 'Not authorized')
       return <h4>You are not authorized to see these data</h4>;
-    router.push({ pathname: '/Sign' });
+    if (error.message.includes('jwt')) router.push({ pathname: '/Sign' });
+    else return <h4>{error.message}</h4>;
   }
   if (!data) return <h4> Loading </h4>;
   if (data) {

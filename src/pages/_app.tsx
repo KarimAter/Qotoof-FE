@@ -7,6 +7,7 @@ import store from '../redux/store';
 import SideBar from '../components/SideBar';
 import NavBar from '../components/NavBar';
 import { fetcher } from '../utils/fetchHelpers';
+import ErrorBoundary from '../utils/errorBoundary';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -19,7 +20,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         </Head>
         <NavBar />
         <div className="flex h-screen flex-row">
+          {/* <ErrorBoundary> */}
           <SideBar />
+          {/* </ErrorBoundary>
+          <ErrorBoundary> */}
           <SWRConfig
             value={{
               fetcher,
@@ -29,6 +33,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           >
             <Component {...pageProps} />
           </SWRConfig>
+          {/* </ErrorBoundary> */}
         </div>
       </div>
     </Provider>

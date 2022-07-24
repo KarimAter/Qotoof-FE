@@ -15,10 +15,7 @@ type Props = {};
 
 const donors = (props: Props): JSX.Element => {
   const { token } = useSelector(authSelector);
-  const { data, error } = useSWR<IDonor[]>(
-    [`${API_ENDPOINT}/donor/`, token],
-   
-  );
+  const { data, error } = useSWR<IDonor[]>([`${API_ENDPOINT}/donor/`, token]);
   const router = useRouter();
   // let output
   const goToForm = () => {
@@ -27,7 +24,7 @@ const donors = (props: Props): JSX.Element => {
 
   if (error) {
     console.log(error.message);
-    router.push({ pathname: '/Sign' });
+    if (error.message.includes('jwt')) router.push({ pathname: '/Sign' });
     return <h4>{error.message}</h4>;
   }
   if (!data) return <h4> Loading </h4>;
