@@ -83,7 +83,7 @@ function DonorForm() {
           options={referralsList}
           control={control}
           fieldLabel="referral"
-          value={updatedDonor?.referral}
+          valuee={updatedDonor?.referral}
         />
         <Button type="submit">{updatedDonor?.name ? 'Update' : 'Add'} </Button>
       </form>

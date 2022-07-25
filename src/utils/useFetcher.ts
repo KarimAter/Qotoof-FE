@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { authSelector } from '../redux/authSlice';
 import API_ENDPOINT from './constants';
+import { fetchHelper } from './fetchHelpers';
 
 function useFetcher(endpoint: string, resolver: (a: any) => any[]) {
   const [value, setValue] = useState<any>([]);
@@ -10,18 +11,16 @@ function useFetcher(endpoint: string, resolver: (a: any) => any[]) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetch(`${API_ENDPOINT}/${endpoint}/`, {
-        headers: { Authorization: `Bearer ${token}` },
+      const result = await fetchHelper(`${API_ENDPOINT}/${endpoint}/`, {
+        method: 'GET',
+        token,
       });
-      const result = await data.json();
-      setValue(resolver(result));
+      setValue(resolver(result.data));
     };
-    try {
-      fetchData();
-    } catch (e) {
-      console.log(e);
-    }
+
+    fetchData()
   }, []);
+
   return value;
 }
 

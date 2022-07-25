@@ -1,8 +1,11 @@
 /* eslint-disable no-undef */
 
+import { ToastContainer, toast } from 'react-toastify';
+
 export const fetchHelper = async (
   apiEndpoint: string,
   payload: { method: string; token?: string; body?: any },
+  toastMessage?: string,
 ) => {
   // const router = useRouter();
   try {
@@ -17,8 +20,10 @@ export const fetchHelper = async (
     const data = await res.json();
     // const { status } = res;
     // if (status === 401) router.push({ pathname: '/Sign' });
+    if (toastMessage) toast(`${toastMessage} successfully`);
     return { data, status: res.status };
   } catch (error) {
+    if (toastMessage) toast(`${toastMessage} unsuccessfully`);
     return { data: undefined, status: 500 };
   }
 };

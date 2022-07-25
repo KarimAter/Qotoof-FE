@@ -4,6 +4,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import API_ENDPOINT, { DonationCategory } from '../utils/constants';
 import Button from '../components/Button';
 import Input from '../components/Input';
@@ -57,22 +59,30 @@ function DonationForm(props: Props) {
   const submitData = async (donation: IDonation) => {
     console.log(donation);
     if (updatedDonation) {
-      await fetchHelper(`${API_ENDPOINT}/donation/`, {
-        method: 'PUT',
-        token,
-        body: JSON.stringify({
-          id: updatedDonation.id,
-          ...donation,
-        }),
-      });
+      await fetchHelper(
+        `${API_ENDPOINT}/donation/`,
+        {
+          method: 'PUT',
+          token,
+          body: JSON.stringify({
+            id: updatedDonation.id,
+            ...donation,
+          }),
+        },
+        'donation is updated',
+      );
     } else {
-      await fetchHelper(`${API_ENDPOINT}/donation/`, {
-        method: 'POST',
-        token,
-        body: JSON.stringify({
-          ...donation,
-        }),
-      });
+      await fetchHelper(
+        `${API_ENDPOINT}/donation/`,
+        {
+          method: 'POST',
+          token,
+          body: JSON.stringify({
+            ...donation,
+          }),
+        },
+        'donation is added',
+      );
     }
   };
 
@@ -103,6 +113,8 @@ function DonationForm(props: Props) {
           valuee={{ name: updatedDonation?.category }}
         />
         <Button type="submit">{updatedDonation ? 'Update' : 'Add'} </Button>
+
+        <ToastContainer position="bottom-right" />
       </form>
       <h4>{response}</h4>
     </div>
