@@ -40,3 +40,7 @@ export interface IExpense {
   user: IUser;
   beneficiary: IBeneficiary;
 }
+export type CategoryBalance = {
+  category: string;
+  balance: number;
+};

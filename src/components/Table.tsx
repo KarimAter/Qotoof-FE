@@ -7,12 +7,12 @@ import { KeyedMutator } from 'swr';
 import { authSelector } from '../redux/authSlice';
 import API_ENDPOINT from '../utils/constants';
 import { fetchHelper } from '../utils/fetchHelpers';
-import { IBeneficiary, IDonation, IDonor, IExpense, IUser } from '../utils/interfaces';
+import { CategoryBalance, IBeneficiary, IDonation, IDonor, IExpense, IUser } from '../utils/interfaces';
 import Button from './Button';
 
 interface Props {
   models: (IDonation | IBeneficiary | IExpense)[];
-  mut: KeyedMutator<IDonation[] | IExpense[] | IDonor[] | IUser[]>;
+  mut?: KeyedMutator<IDonation[] | IExpense[] | IDonor[] | IUser[] | CategoryBalance[]>;
 }
 
 function Table({ models, mut }: Props) {
@@ -91,7 +91,7 @@ function Table({ models, mut }: Props) {
             {columnHeads.map((h) => (
               <th
                 key={h}
-                colSpan={h === 'id' ? 1 : 6}
+                colSpan={ 6}
                 scope="col"
                 className="overflow-clip  border-2 border-black"
               >
@@ -122,7 +122,7 @@ function Table({ models, mut }: Props) {
                 <td
                   key={`${Math.random() * 100}`}
                   className="overflow-clip border-2  border-gray-500"
-                  colSpan={index === 0 ? 1 : 6}
+                  colSpan={ 6}
                 >
                   {typeof v === 'object' ? v?.name : v}
                 </td>
